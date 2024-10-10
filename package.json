@@ -1,0 +1,19 @@
+{
+  "name": "bgm_mahjong_info",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Jinmin-Goh/BGM_mahjong_info.git"
+  },
+  "author": "Jinmin Goh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jinmin-Goh/BGM_mahjong_info/issues"
+  },
+  "homepage": "https://github.com/Jinmin-Goh/BGM_mahjong_info#readme"
+}
