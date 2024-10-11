@@ -1,7 +1,7 @@
-import { data_parser } from './data_parser';
+import { dataParser } from './data_parser';
 
 async function main() {
-    data_parser();
+    dataParser();
 }
 
 main();

@@ -86,7 +86,7 @@ async function saveToJson(data_group: DataGroup[]): Promise<void> {
   }
 }
 
-export async function data_parser() {
+export async function dataParser() {
   const data = await parser();
 
   if (data.length === 0) {
