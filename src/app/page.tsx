@@ -1,16 +1,16 @@
-"use client"
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGroup } from '@/types/data';
 import { Button, Stack, Container, Box, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import Update from '@mui/icons-material/Update'
-import Upload from '@mui/icons-material/Upload'
+import Update from '@mui/icons-material/Update';
+import Upload from '@mui/icons-material/Upload';
 import MainDataTable from './main_data_table';
 
 const Home: React.FC = () => {
-  const [data, setData] = useState<DataGroup[]  | null>(null);
+  const [data, setData] = useState<DataGroup[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -18,22 +18,22 @@ const Home: React.FC = () => {
   const fetchData = async () => {
     setIsFetching(true);
     try {
-      setError(null); 
-      const response = await axios.get('/api/data_parser'); 
-      setData(response.data.data); 
+      setError(null);
+      const response = await axios.get('/api/data_parser');
+      setData(response.data.data);
     } catch (error) {
       setError('Failed to fetch data');
     } finally {
       setIsFetching(false);
     }
   };
-  
+
   const loadData = async () => {
     setIsLoading(true);
     try {
-      setError(null); 
-      const response = await axios.get('/api/data_loader'); 
-      setData(response.data.data); 
+      setError(null);
+      const response = await axios.get('/api/data_loader');
+      setData(response.data.data);
     } catch (error) {
       setError('Failed to load data');
     } finally {
@@ -46,11 +46,16 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: "40px" }}>
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="15vh">
-        <Typography 
-          variant="h1" 
-          align="center" 
+    <Container maxWidth="lg" style={{ marginTop: '40px' }}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="15vh"
+      >
+        <Typography
+          variant="h1"
+          align="center"
           sx={{ fontSize: '2rem', fontWeight: 'bold' }}
           gutterBottom
         >
@@ -58,10 +63,7 @@ const Home: React.FC = () => {
         </Typography>
       </Box>
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Stack 
-          direction="row"
-          spacing={2}
-        >
+        <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
             color="primary"
@@ -71,7 +73,7 @@ const Home: React.FC = () => {
             onClick={loadData}
             disabled={isLoading}
           >
-            {isLoading ? "불러오는 중..." : "데이터 불러오기"}
+            {isLoading ? '불러오는 중...' : '데이터 불러오기'}
           </Button>
           <Button
             variant="contained"
@@ -82,15 +84,11 @@ const Home: React.FC = () => {
             onClick={fetchData}
             disabled={isFetching}
           >
-            {isFetching ? "갱신하는 중..." : "데이터 갱신하기"}
+            {isFetching ? '갱신하는 중...' : '데이터 갱신하기'}
           </Button>
         </Stack>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {data ? (
-          <MainDataTable data={data} />
-        ) : (
-          <p>데이터가 없습니다.</p>
-        )}
+        {data ? <MainDataTable data={data} /> : <p>데이터가 없습니다.</p>}
       </div>
       <Typography variant="body1" align="center">
         Welcome to my website! Here is some more content.
