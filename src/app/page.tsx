@@ -1,57 +1,101 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGroup } from '@/types/data';
+import { Button, Stack, Container, Box, Typography } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import Update from '@mui/icons-material/Update'
+import Upload from '@mui/icons-material/Upload'
+import MainDataTable from './main_data_table';
 
 const Home: React.FC = () => {
   const [data, setData] = useState<DataGroup[]  | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchData = async () => {
+    setIsFetching(true);
     try {
       setError(null); 
       const response = await axios.get('/api/data_parser'); 
       setData(response.data.data); 
     } catch (error) {
       setError('Failed to fetch data');
+    } finally {
+      setIsFetching(false);
     }
   };
-
+  
   const loadData = async () => {
+    setIsLoading(true);
     try {
       setError(null); 
       const response = await axios.get('/api/data_loader'); 
       setData(response.data.data); 
     } catch (error) {
       setError('Failed to load data');
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
-    <div>
-      <h1>BGM 마작 기록 인포 사이트</h1>
-
-      <button onClick={loadData}>데이터 불러오기</button>
-      <button onClick={fetchData}>데이터 갱신하기</button>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {data ? (
-        data.map((item, index) => (
-          <div key={index} style={{ border: '1px solid #ccc', marginBottom: '20px', padding: '10px' }}>
-            <p><strong>Timestamp:</strong> {item.timestamp}</p>
-            <p><strong>1st Place:</strong> {item.first_place_name} / {item.first_place_score}</p>
-            <p><strong>2nd Place:</strong> {item.second_place_name} / {item.second_place_score}</p>
-            <p><strong>3rd Place:</strong> {item.third_place_name} / {item.third_place_score}</p>
-            <p><strong>4th Place:</strong> {item.fourth_place_name} / {item.fourth_place_score}</p>
-            <p><strong>Checksum:</strong> {item.checksum}</p>
-            <p><strong>Comment:</strong> {item.comment}</p>
-          </div>
-        ))
-      ) : (
-        <p>데이터가 없습니다.</p>
-      )}
-    </div>
+    <Container maxWidth="lg" style={{ marginTop: "40px" }}>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="15vh">
+        <Typography 
+          variant="h1" 
+          align="center" 
+          sx={{ fontSize: '2rem', fontWeight: 'bold' }}
+          gutterBottom
+        >
+          BGM 기록작 대국 기록 인포
+        </Typography>
+      </Box>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Stack 
+          direction="row"
+          spacing={2}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            endIcon={<Upload />}
+            style={{ borderRadius: '8px', padding: '10px 20px' }}
+            onClick={loadData}
+            disabled={isLoading}
+          >
+            {isLoading ? "불러오는 중..." : "데이터 불러오기"}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            endIcon={<Update />}
+            style={{ borderRadius: '8px', padding: '10px 20px' }}
+            onClick={fetchData}
+            disabled={isFetching}
+          >
+            {isFetching ? "갱신하는 중..." : "데이터 갱신하기"}
+          </Button>
+        </Stack>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {data ? (
+          <MainDataTable data={data} />
+        ) : (
+          <p>데이터가 없습니다.</p>
+        )}
+      </div>
+      <Typography variant="body1" align="center">
+        Welcome to my website! Here is some more content.
+      </Typography>
+    </Container>
   );
 };
 
