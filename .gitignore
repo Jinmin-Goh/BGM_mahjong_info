@@ -40,4 +40,5 @@ next-env.d.ts
 .eslintrc
 .prettierrc
 eslint.config.mjs
-data.json
+game_log.json
+name_mapping.json
