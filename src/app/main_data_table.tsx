@@ -13,7 +13,7 @@ import {
   Container,
   Box,
   TextField,
-  Typography
+  Typography,
 } from '@mui/material';
 import { format } from 'date-fns';
 import { DataGroup } from '@/types/data';
@@ -36,7 +36,8 @@ export default function MainDataTable({ data }: MainDataTableProps) {
   };
 
   const filteredData = React.useMemo(() => {
-    return data.filter((row) =>
+    return data.filter(
+      (row) =>
         row.first_place_name.toLowerCase().includes(filter.toLowerCase()) ||
         row.second_place_name.toLowerCase().includes(filter.toLowerCase()) ||
         row.third_place_name.toLowerCase().includes(filter.toLowerCase()) ||
@@ -66,7 +67,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align='center'>
+              <TableCell align="center" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'timestamp'}
                   direction={orderBy === 'timestamp' ? order : 'asc'}
@@ -75,7 +76,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>대국 시간</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'first_place_name'}
                   direction={orderBy === 'first_place_name' ? order : 'asc'}
@@ -84,7 +85,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>1위</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'first_place_score'}
                   direction={orderBy === 'first_place_score' ? order : 'asc'}
@@ -93,7 +94,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'second_place_name'}
                   direction={orderBy === 'second_place_name' ? order : 'asc'}
@@ -102,7 +103,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>2위</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'second_place_score'}
                   direction={orderBy === 'second_place_score' ? order : 'asc'}
@@ -111,7 +112,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'third_place_name'}
                   direction={orderBy === 'third_place_name' ? order : 'asc'}
@@ -120,7 +121,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>3위</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'third_place_score'}
                   direction={orderBy === 'third_place_score' ? order : 'asc'}
@@ -129,7 +130,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'fourth_place_name'}
                   direction={orderBy === 'fourth_place_name' ? order : 'asc'}
@@ -138,7 +139,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>4위</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'fourth_place_score'}
                   direction={orderBy === 'fourth_place_score' ? order : 'asc'}
@@ -147,7 +148,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'checksum'}
                   direction={orderBy === 'checksum' ? order : 'asc'}
@@ -156,7 +157,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>점수 합</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="center" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
                   active={orderBy === 'comment'}
                   direction={orderBy === 'comment' ? order : 'asc'}
@@ -168,30 +169,32 @@ export default function MainDataTable({ data }: MainDataTableProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedData.length > 0 ? (sortedData.map((row) => (
-              <TableRow key={row.timestamp}>
-                <TableCell component="th" scope="row">
-                  {format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}
+            {sortedData.length > 0 ? (
+              sortedData.map((row) => (
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}
+                  </TableCell>
+                  <TableCell align="right">{row.first_place_name}</TableCell>
+                  <TableCell align="right">{row.first_place_score}</TableCell>
+                  <TableCell align="right">{row.second_place_name}</TableCell>
+                  <TableCell align="right">{row.second_place_score}</TableCell>
+                  <TableCell align="right">{row.third_place_name}</TableCell>
+                  <TableCell align="right">{row.third_place_score}</TableCell>
+                  <TableCell align="right">{row.fourth_place_name}</TableCell>
+                  <TableCell align="right">{row.fourth_place_score}</TableCell>
+                  <TableCell align="right">{row.checksum}</TableCell>
+                  <TableCell align="right">{row.comment}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell align="center" colSpan={11}>
+                  <Typography variant="body1" color="textSecondary">
+                    데이터가 없습니다.
+                  </Typography>
                 </TableCell>
-                <TableCell align="right">{row.first_place_name}</TableCell>
-                <TableCell align="right">{row.first_place_score}</TableCell>
-                <TableCell align="right">{row.second_place_name}</TableCell>
-                <TableCell align="right">{row.second_place_score}</TableCell>
-                <TableCell align="right">{row.third_place_name}</TableCell>
-                <TableCell align="right">{row.third_place_score}</TableCell>
-                <TableCell align="right">{row.fourth_place_name}</TableCell>
-                <TableCell align="right">{row.fourth_place_score}</TableCell>
-                <TableCell align="right">{row.checksum}</TableCell>
-                <TableCell align="right">{row.comment}</TableCell>
               </TableRow>
-            ))) : (
-            <TableRow>
-              <TableCell align="center" colSpan={11}>
-                <Typography variant="body1" color="textSecondary">
-                  데이터가 없습니다.
-                </Typography>
-              </TableCell>
-            </TableRow>
             )}
           </TableBody>
         </Table>

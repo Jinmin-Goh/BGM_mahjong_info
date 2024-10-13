@@ -4,7 +4,7 @@ import axios from 'axios';
 import { load } from 'cheerio';
 import fs from 'fs/promises';
 import { DataGroup } from '@/types/data';
-import animalNames from '@/data/animalNames'
+import animalNames from '@/data/animalNames';
 
 dotenv.config();
 
@@ -104,8 +104,8 @@ async function loadMapping() {
   if (mappingCache) return mappingCache;
 
   try {
-    const data = await fs.readFile('./src/data/name_mapping.json', "utf-8");
-    mappingCache = JSON.parse(data)
+    const data = await fs.readFile('./src/data/name_mapping.json', 'utf-8');
+    mappingCache = JSON.parse(data);
     return mappingCache;
   } catch (error) {
     mappingCache = {};
@@ -115,7 +115,10 @@ async function loadMapping() {
 
 async function saveMapping(mapping: Record<string, string>) {
   mappingCache = mapping;
-  await fs.writeFile('./src/data/name_mapping.json', JSON.stringify(mapping, null, 2));
+  await fs.writeFile(
+    './src/data/name_mapping.json',
+    JSON.stringify(mapping, null, 2)
+  );
 }
 
 async function findAvailableAnimal(usedAnimals: Set<string>) {
@@ -132,7 +135,7 @@ async function getRandomAnimal(originalName: string): Promise<string> {
 
   const availableAnimal = await findAvailableAnimal(usedAnimals);
   if (!availableAnimal) {
-    console.error("No more animal names available!");
+    console.error('No more animal names available!');
   }
   mappingData[originalName] = availableAnimal;
   await saveMapping(mappingData);
@@ -144,9 +147,9 @@ async function animalizeComment(data: DataGroup): Promise<string> {
   const secondPlaceName = await getRandomAnimal(data.second_place_name);
   const thirdPlaceName = await getRandomAnimal(data.third_place_name);
   const fourthPlaceName = await getRandomAnimal(data.fourth_place_name);
-  
+
   if (!data.comment) {
-    return "";
+    return '';
   }
   return data.comment
     .replaceAll(data.first_place_name, firstPlaceName)
