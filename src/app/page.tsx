@@ -46,7 +46,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: '40px' }}>
+    <Container maxWidth="xl" style={{ marginTop: '40px' }}>
       <Box
         display="flex"
         justifyContent="center"

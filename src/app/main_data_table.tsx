@@ -53,7 +53,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
   }, [filteredData, order, orderBy]);
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: '40px' }}>
+    <Container maxWidth="xl" style={{ marginTop: '40px' }}>
       <Box display="flex" justifyContent="center" marginBottom="20px">
         <TextField
           label="대국자 이름"
