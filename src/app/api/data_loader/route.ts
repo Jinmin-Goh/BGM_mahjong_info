@@ -5,7 +5,7 @@ import path from 'path';
 export async function GET() {
   try {
     console.log('Loading data...');
-    const filePath = path.join(process.cwd(), 'data.json');
+    const filePath = path.join(process.cwd(), './src/data/game_log.json');
     const fileContents = fs.readFileSync(filePath, 'utf-8');
     const data = JSON.parse(fileContents);
     console.log('Successfully loaded data');

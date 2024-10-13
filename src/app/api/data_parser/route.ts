@@ -4,6 +4,7 @@ import axios from 'axios';
 import { load } from 'cheerio';
 import fs from 'fs/promises';
 import { DataGroup } from '@/types/data';
+import animalNames from '@/data/animalNames';
 
 dotenv.config();
 
@@ -97,74 +98,83 @@ function dataProcess(data: string[]) {
   return data_group;
 }
 
-function animalizeName(data_group: DataGroup[]): DataGroup[] {
-  const animalNames = [
-    'Alligator',
-    'Owl',
-    'Giraffe',
-    'Unicorn',
-    'Rhino',
-    'Emu',
-    'Jaguar',
-    'Mongoose',
-    'Elephant',
-    'Camel',
-    'Gazelle',
-    'Beaver',
-    'Raccoon',
-    'Falcon',
-    'Gecko',
-    'Otter',
-    'Lion',
-    'Fox',
-    'Koala',
-    'Ferret',
-    'Penguin',
-    'Dolphin',
-    'Aardvark',
-    'Flamingo',
-    'Caribou',
-    'Kangaroo',
-    'Eagle',
-    'Meerkat',
-    'Hedgehog',
-    'Bison',
-    'Shark',
-    'Chipmunk',
-    'Ocelot',
-    'Dugong',
-    'Squirrel',
-    'Quokka',
-    'Bonobo',
-    'Parrot',
-    'Leopard',
-    'Buffalo',
-    'Llama',
-    'Coyote',
-    'Narwhal',
-    'Armadillo',
-    'Cheetah',
-    'Bluejay',
-    'Tiger',
-    'Alpaca',
-    'Hyena',
-    'Bat',
-    'Dingo',
-    'Chameleon',
-    'Panda',
-    'Crocodile',
-    'Monkey',
-    'Cockatoo',
-    'Zebra',
-    'Antelope',
-    'Ibe',
-  ];
+let mappingCache: Record<string, string> | null = null;
+
+async function loadMapping() {
+  if (mappingCache) return mappingCache;
+
+  try {
+    const data = await fs.readFile('./src/data/name_mapping.json', 'utf-8');
+    mappingCache = JSON.parse(data);
+    return mappingCache;
+  } catch (error) {
+    mappingCache = {};
+    return mappingCache;
+  }
+}
+
+async function saveMapping(mapping: Record<string, string>) {
+  mappingCache = mapping;
+  await fs.writeFile(
+    './src/data/name_mapping.json',
+    JSON.stringify(mapping, null, 2)
+  );
+}
+
+async function findAvailableAnimal(usedAnimals: Set<string>) {
+  return animalNames.find((animal: string) => !usedAnimals.has(animal));
+}
+
+async function getRandomAnimal(originalName: string): Promise<string> {
+  const mappingData = await loadMapping();
+  const usedAnimals: Set<string> = new Set(Object.values(mappingData));
+
+  if (mappingData[originalName]) {
+    return mappingData[originalName];
+  }
+
+  const availableAnimal = await findAvailableAnimal(usedAnimals);
+  if (!availableAnimal) {
+    console.error('No more animal names available!');
+  }
+  mappingData[originalName] = availableAnimal;
+  await saveMapping(mappingData);
+  return availableAnimal;
+}
+
+async function animalizeComment(data: DataGroup): Promise<string> {
+  const firstPlaceName = await getRandomAnimal(data.first_place_name);
+  const secondPlaceName = await getRandomAnimal(data.second_place_name);
+  const thirdPlaceName = await getRandomAnimal(data.third_place_name);
+  const fourthPlaceName = await getRandomAnimal(data.fourth_place_name);
+
+  if (!data.comment) {
+    return '';
+  }
+  return data.comment
+    .replaceAll(data.first_place_name, firstPlaceName)
+    .replaceAll(data.second_place_name, secondPlaceName)
+    .replaceAll(data.third_place_name, thirdPlaceName)
+    .replaceAll(data.fourth_place_name, fourthPlaceName);
+}
+
+async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
+  return Promise.all(
+    data_group.map(async (data) => ({
+      ...data,
+      first_place_name: await getRandomAnimal(data.first_place_name),
+      second_place_name: await getRandomAnimal(data.second_place_name),
+      third_place_name: await getRandomAnimal(data.third_place_name),
+      fourth_place_name: await getRandomAnimal(data.fourth_place_name),
+      comment: await animalizeComment(data),
+    }))
+  );
 }
 
 async function saveToJson(data_group: DataGroup[]): Promise<void> {
   try {
     const data_json = JSON.stringify(data_group, null, 2);
-    await fs.writeFile('./data.json', data_json);
+    await fs.writeFile('./src/data/game_log.json', data_json);
     console.log('Successfully wrote file');
   } catch (err) {
     console.error('Error writing file', err);
@@ -183,9 +193,10 @@ export async function GET() {
     }
 
     const data_group = dataProcess(data);
-    await saveToJson(data_group);
+    const annonymous_data = await animalizeName(data_group);
+    await saveToJson(annonymous_data);
 
-    return NextResponse.json({ data: data_group });
+    return NextResponse.json({ data: annonymous_data });
   } catch (err) {
     return NextResponse.json(
       { error: 'Failed to fetch and parse data' },
