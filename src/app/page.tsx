@@ -88,11 +88,8 @@ const Home: React.FC = () => {
           </Button>
         </Stack>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {data ? <MainDataTable data={data} /> : <p>데이터가 없습니다.</p>}
+        {data ? <MainDataTable data={data} /> : <p>데이터 로드 전입니다. 데이터를 로드해주세요.</p>}
       </div>
-      <Typography variant="body1" align="center">
-        Welcome to my website! Here is some more content.
-      </Typography>
     </Container>
   );
 };

@@ -13,6 +13,7 @@ import {
   Container,
   Box,
   TextField,
+  Typography
 } from '@mui/material';
 import { format } from 'date-fns';
 import { DataGroup } from '@/types/data';
@@ -36,11 +37,12 @@ export default function MainDataTable({ data }: MainDataTableProps) {
 
   const filteredData = React.useMemo(() => {
     return data.filter((row) =>
-      Object.values(row).some((value) =>
-        value.toString().toLowerCase().includes(filter.toLowerCase())
-      )
+        row.first_place_name.toLowerCase().includes(filter.toLowerCase()) ||
+        row.second_place_name.toLowerCase().includes(filter.toLowerCase()) ||
+        row.third_place_name.toLowerCase().includes(filter.toLowerCase()) ||
+        row.fourth_place_name.toLowerCase().includes(filter.toLowerCase())
     );
-  }, [filter]);
+  }, [filter, data]);
 
   const sortedData = React.useMemo(() => {
     return [...filteredData].sort((a, b) => {
@@ -64,7 +66,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell align='center'>
                 <TableSortLabel
                   active={orderBy === 'timestamp'}
                   direction={orderBy === 'timestamp' ? order : 'asc'}
@@ -154,7 +156,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <strong>점수 합</strong>
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <TableSortLabel
                   active={orderBy === 'comment'}
                   direction={orderBy === 'comment' ? order : 'asc'}
@@ -166,7 +168,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedData.map((row) => (
+            {sortedData.length > 0 ? (sortedData.map((row) => (
               <TableRow key={row.timestamp}>
                 <TableCell component="th" scope="row">
                   {format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}
@@ -182,7 +184,15 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                 <TableCell align="right">{row.checksum}</TableCell>
                 <TableCell align="right">{row.comment}</TableCell>
               </TableRow>
-            ))}
+            ))) : (
+            <TableRow>
+              <TableCell align="center" colSpan={11}>
+                <Typography variant="body1" color="textSecondary">
+                  데이터가 없습니다.
+                </Typography>
+              </TableCell>
+            </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
