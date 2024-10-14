@@ -51,7 +51,7 @@ export default function FetchLoadButton({
     <Container maxWidth="xl" style={{ marginTop: '20px' }}>
       <Box
         display="flex"
-        justifyContent="flex-end" // 오른쪽 정렬
+        justifyContent="flex-end"
         alignItems="center"
         marginBottom="20px"
       >
