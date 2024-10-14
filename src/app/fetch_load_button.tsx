@@ -6,6 +6,7 @@ import { DataGroup } from '@/types/data';
 import { Button, Container, Box } from '@mui/material';
 import Update from '@mui/icons-material/Update';
 import Upload from '@mui/icons-material/Upload';
+import HourglassBottomRounded from '@mui/icons-material/HourglassBottomRounded';
 
 interface FetchLoadButtonProps {
   onDataChange: (data: DataGroup[] | null) => void;
@@ -48,36 +49,29 @@ export default function FetchLoadButton({
   };
 
   return (
-    <Container maxWidth="xl" style={{ marginTop: '20px' }}>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="center"
-        marginBottom="20px"
+    <Box display="flex" justifyContent="flex-end" alignItems="center">
+      {/* <Button
+				variant="contained"
+				color="primary"
+				size="medium"
+				endIcon={<Upload />}
+				style={{ borderRadius: '8px', padding: '10px 20px' }}
+				onClick={loadData}
+				disabled={isLoading}
+			>
+				{isLoading ? '불러오는 중...' : '데이터 불러오기'}
+			</Button> */}
+      <Button
+        variant="contained"
+        color="primary"
+        size="medium"
+        endIcon={isFetching ? <HourglassBottomRounded /> : <Update />}
+        style={{ borderRadius: '15px', width: 180, height: 50 }}
+        onClick={fetchData}
+        disabled={isFetching}
       >
-        {/* <Button
-					variant="contained"
-					color="primary"
-					size="medium"
-					endIcon={<Upload />}
-					style={{ borderRadius: '8px', padding: '10px 20px' }}
-					onClick={loadData}
-					disabled={isLoading}
-				>
-					{isLoading ? '불러오는 중...' : '데이터 불러오기'}
-				</Button> */}
-        <Button
-          variant="contained"
-          color="primary"
-          size="medium"
-          endIcon={<Update />}
-          style={{ borderRadius: '8px', padding: '10px 20px' }}
-          onClick={fetchData}
-          disabled={isFetching}
-        >
-          {isFetching ? '갱신하는 중...' : '데이터 갱신하기'}
-        </Button>
-      </Box>
-    </Container>
+        {isFetching ? '갱신하는 중...' : '데이터 갱신하기'}
+      </Button>
+    </Box>
   );
 }

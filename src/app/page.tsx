@@ -6,7 +6,6 @@ import { DataGroup } from '@/types/data';
 import { Container } from '@mui/material';
 import Title from './title';
 import MainInfo from './main_info';
-import FetchLoadButton from './fetch_load_button';
 import MainDataTable from './main_data_table';
 import LoadingData from './loading_data';
 
@@ -24,8 +23,8 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleFetchLoadDataChange = (data: DataGroup[] | null) => {
-    setData(data);
+  const handleChildDataUpdate = (updatedData: DataGroup[] | null) => {
+    setData(updatedData);
   };
 
   // initial data load
@@ -39,8 +38,7 @@ const Home: React.FC = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {data ? (
         <Container maxWidth="xl" style={{ marginTop: '40px' }}>
-          <MainInfo data={data} />
-          <FetchLoadButton onDataChange={handleFetchLoadDataChange} />
+          <MainInfo parentData={data} onDataChange={handleChildDataUpdate} />
           <MainDataTable data={data} />
         </Container>
       ) : (

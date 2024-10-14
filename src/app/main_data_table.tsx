@@ -14,9 +14,13 @@ import {
   Box,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { format } from 'date-fns';
 import { DataGroup } from '@/types/data';
+import CloseIcon from '@mui/icons-material/Close';
+import { width } from '@mui/system';
 
 interface MainDataTableProps {
   data: DataGroup[];
@@ -33,6 +37,10 @@ export default function MainDataTable({ data }: MainDataTableProps) {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const clearFilter = () => {
+    setFilter('');
   };
 
   const filteredData = React.useMemo(() => {
@@ -60,7 +68,17 @@ export default function MainDataTable({ data }: MainDataTableProps) {
           label="대국자 이름"
           variant="outlined"
           value={filter}
+          sx={{ width: 200 }}
           onChange={(e) => setFilter(e.target.value)}
+          InputProps={{
+            endAdornment: filter && (
+              <InputAdornment position="end">
+                <IconButton onClick={clearFilter}>
+                  <CloseIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       </Box>
       <TableContainer component={Paper} style={{ marginTop: '20px' }}>
