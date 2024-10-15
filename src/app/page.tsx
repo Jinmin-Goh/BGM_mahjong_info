@@ -5,9 +5,9 @@ import axios from 'axios';
 import { DataGroup } from '@/types/data';
 import { Container } from '@mui/material';
 import Title from './title';
-import MainInfo from './main_info';
-import MainDataTable from './main_data_table';
-import LoadingData from './loading_data';
+import MainInfo from './mainInfo';
+import MainDataTable from './mainDataTable';
+import LoadingData from './loadingData';
 
 const Home: React.FC = () => {
   const [data, setData] = useState<DataGroup[] | null>(null);

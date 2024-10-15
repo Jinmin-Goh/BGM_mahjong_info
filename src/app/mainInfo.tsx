@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { DataGroup } from '@/types/data';
 import { Container, Button, Box, Typography, Collapse } from '@mui/material';
-import FetchLoadButton from './fetch_load_button';
+import FetchLoadButton from './fetchLoadButton';
 import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRounded from '@mui/icons-material/ExpandLessRounded';
 
