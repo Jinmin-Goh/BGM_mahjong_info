@@ -71,14 +71,15 @@ function dataProcess(data: string[]) {
         const cleanedYear = parseInt(year.replace('.', ''));
         const cleanedMonth = parseInt(month.replace('.', ''));
         const cleanedDay = parseInt(day.replace('.', ''));
-        let [hour, minute, second] = timePart
+        const [_, minute, second] = timePart
           .split(':')
           .map((num) => parseInt(num, 10));
 
+        let hour = parseInt(timePart.split(':')[0], 10);
         if (isPM && hour !== 12) hour += 12;
         if (!isPM && hour === 12) hour = 0;
 
-        group[keys[j]] = new Date(
+        (group[keys[j]] as Date) = new Date(
           cleanedYear,
           cleanedMonth - 1,
           cleanedDay,
@@ -87,9 +88,9 @@ function dataProcess(data: string[]) {
           second
         );
       } else if (j == 2 || j == 4 || j == 6 || j == 8 || j == 9) {
-        group[keys[j]] = parseInt(data[i + j], 10);
+        (group[keys[j]] as number) = parseInt(data[i + j], 10);
       } else {
-        group[keys[j]] = data[i + j];
+        (group[keys[j]] as string) = data[i + j];
       }
     }
 
@@ -100,14 +101,18 @@ function dataProcess(data: string[]) {
 
 let mappingCache: Record<string, string> | null = null;
 
-async function loadMapping() {
+async function loadMapping(): Promise<Record<string, string>> {
   if (mappingCache) return mappingCache;
 
   try {
     const data = await fs.readFile('./src/data/name_mapping.json', 'utf-8');
     mappingCache = JSON.parse(data);
+    if (!mappingCache) {
+      throw new Error('Error while loading name mapping data');
+    }
     return mappingCache;
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     mappingCache = {};
     return mappingCache;
   }
@@ -136,10 +141,16 @@ async function getRandomAnimal(originalName: string): Promise<string> {
   const availableAnimal = await findAvailableAnimal(usedAnimals);
   if (!availableAnimal) {
     console.error('No more animal names available!');
+    const tempName = 'Temp_' + (mappingData.length + 1).toString();
+    mappingData[originalName] = tempName;
+    await saveMapping(mappingData);
+    return tempName;
   }
-  mappingData[originalName] = availableAnimal;
-  await saveMapping(mappingData);
-  return availableAnimal;
+  else {
+    mappingData[originalName] = availableAnimal;
+    await saveMapping(mappingData);
+    return availableAnimal;
+  }
 }
 
 async function animalizeComment(data: DataGroup): Promise<string> {
@@ -199,7 +210,7 @@ export async function GET() {
     return NextResponse.json({ data: annonymous_data });
   } catch (err) {
     return NextResponse.json(
-      { error: 'Failed to fetch and parse data' },
+      { error: `Failed to fetch and parse data: ${err}` },
       { status: 500 }
     );
   }
