@@ -1,3 +1,22 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "settings": {
+    "react": {
+      "version": "detect",
+      "defaultVersion": ""
+    }
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "React": "writable"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "no-unused-vars": ["warn", { "varsIgnorePattern": "^_" }]
+  }
 }

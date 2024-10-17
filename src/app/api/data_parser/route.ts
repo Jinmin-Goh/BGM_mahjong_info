@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server';
+import { Storage } from '@google-cloud/storage';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { load } from 'cheerio';
-import fs from 'fs/promises';
 import { DataGroup } from '@/types/data';
 import animalNames from '@/data/animalNames';
 
 dotenv.config();
+
+const storage = new Storage({
+  projectId: process.env.GCLOUD_PROJECT_ID,
+  credentials: JSON.parse(process.env.KEY_FILE as string),
+});
+
+const bucketName = 'bgm-mahjong-data';
 
 async function parser(): Promise<string[]> {
   try {
@@ -71,14 +78,15 @@ function dataProcess(data: string[]) {
         const cleanedYear = parseInt(year.replace('.', ''));
         const cleanedMonth = parseInt(month.replace('.', ''));
         const cleanedDay = parseInt(day.replace('.', ''));
-        let [hour, minute, second] = timePart
+        const [, minute, second] = timePart
           .split(':')
           .map((num) => parseInt(num, 10));
 
+        let hour = parseInt(timePart.split(':')[0], 10);
         if (isPM && hour !== 12) hour += 12;
         if (!isPM && hour === 12) hour = 0;
 
-        group[keys[j]] = new Date(
+        (group[keys[j]] as Date) = new Date(
           cleanedYear,
           cleanedMonth - 1,
           cleanedDay,
@@ -87,9 +95,9 @@ function dataProcess(data: string[]) {
           second
         );
       } else if (j == 2 || j == 4 || j == 6 || j == 8 || j == 9) {
-        group[keys[j]] = parseInt(data[i + j], 10);
+        (group[keys[j]] as number) = parseInt(data[i + j], 10);
       } else {
-        group[keys[j]] = data[i + j];
+        (group[keys[j]] as string) = data[i + j];
       }
     }
 
@@ -100,14 +108,20 @@ function dataProcess(data: string[]) {
 
 let mappingCache: Record<string, string> | null = null;
 
-async function loadMapping() {
+async function loadMapping(): Promise<Record<string, string>> {
   if (mappingCache) return mappingCache;
 
   try {
-    const data = await fs.readFile('./src/data/name_mapping.json', 'utf-8');
-    mappingCache = JSON.parse(data);
+    const bucket = storage.bucket(bucketName);
+    const file = bucket.file('name_mapping.json');
+    const [contents] = await file.download();
+    mappingCache = JSON.parse(contents.toString());
+    if (!mappingCache) {
+      throw new Error('Error while loading name mapping data');
+    }
     return mappingCache;
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     mappingCache = {};
     return mappingCache;
   }
@@ -115,10 +129,12 @@ async function loadMapping() {
 
 async function saveMapping(mapping: Record<string, string>) {
   mappingCache = mapping;
-  await fs.writeFile(
-    './src/data/name_mapping.json',
-    JSON.stringify(mapping, null, 2)
-  );
+  await storage
+    .bucket(bucketName)
+    .file('name_mapping.json')
+    .save(JSON.stringify(mapping, null, 2), {
+      contentType: 'application/json',
+    });
 }
 
 async function findAvailableAnimal(usedAnimals: Set<string>) {
@@ -136,10 +152,15 @@ async function getRandomAnimal(originalName: string): Promise<string> {
   const availableAnimal = await findAvailableAnimal(usedAnimals);
   if (!availableAnimal) {
     console.error('No more animal names available!');
+    const tempName = 'Temp_' + (mappingData.length + 1).toString();
+    mappingData[originalName] = tempName;
+    await saveMapping(mappingData);
+    return tempName;
+  } else {
+    mappingData[originalName] = availableAnimal;
+    await saveMapping(mappingData);
+    return availableAnimal;
   }
-  mappingData[originalName] = availableAnimal;
-  await saveMapping(mappingData);
-  return availableAnimal;
 }
 
 async function animalizeComment(data: DataGroup): Promise<string> {
@@ -174,7 +195,12 @@ async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
 async function saveToJson(data_group: DataGroup[]): Promise<void> {
   try {
     const data_json = JSON.stringify(data_group, null, 2);
-    await fs.writeFile('./src/data/game_log.json', data_json);
+    await storage
+    .bucket(bucketName)
+    .file('game_log.json')
+    .save(data_json, {
+      contentType: 'application/json',
+    });
     console.log('Successfully wrote file');
   } catch (err) {
     console.error('Error writing file', err);
@@ -199,7 +225,7 @@ export async function GET() {
     return NextResponse.json({ data: annonymous_data });
   } catch (err) {
     return NextResponse.json(
-      { error: 'Failed to fetch and parse data' },
+      { error: `Failed to fetch and parse data: ${err}` },
       { status: 500 }
     );
   }

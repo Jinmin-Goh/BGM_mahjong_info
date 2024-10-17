@@ -26,7 +26,7 @@ export default function Title() {
           sx={{ fontSize: '2rem' }}
           gutterBottom
         >
-          "麻雀って楽しいよね！"
+          &quot;麻雀って楽しいよね！&quot;
         </Typography>
       </Box>
     </Container>

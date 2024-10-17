@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { DataGroup } from '@/types/data';
 import { Container, Button, Box, Typography, Collapse } from '@mui/material';
 import FetchLoadButton from './fetchLoadButton';
@@ -9,7 +9,7 @@ import ExpandLessRounded from '@mui/icons-material/ExpandLessRounded';
 
 interface MainInfoProps {
   parentData: DataGroup[] | null;
-  onDataChange: (changedData: DataGroup[] | null) => void;
+  onDataChange: (_changedData: DataGroup[] | null) => void;
 }
 
 export default function MainInfo({ parentData, onDataChange }: MainInfoProps) {

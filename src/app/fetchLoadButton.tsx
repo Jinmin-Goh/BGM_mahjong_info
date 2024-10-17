@@ -1,23 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { DataGroup } from '@/types/data';
-import { Button, Container, Box } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import Update from '@mui/icons-material/Update';
-import Upload from '@mui/icons-material/Upload';
+// import Upload from '@mui/icons-material/Upload';
 import HourglassBottomRounded from '@mui/icons-material/HourglassBottomRounded';
 
 interface FetchLoadButtonProps {
-  onDataChange: (data: DataGroup[] | null) => void;
+  onDataChange: (_data: DataGroup[] | null) => void;
 }
 
 export default function FetchLoadButton({
   onDataChange,
 }: FetchLoadButtonProps) {
-  const [data, setData] = useState<DataGroup[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setData] = useState<DataGroup[] | null>(null);
+  const [, setError] = useState<string | null>(null);
+  // const [, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchData = async () => {
@@ -27,26 +27,27 @@ export default function FetchLoadButton({
       const response = await axios.get('/api/data_parser');
       setData(response.data.data);
       onDataChange(response.data.data);
-    } catch (error) {
+    } catch (err) {
+      console.log('Error:', err);
       setError('Failed to fetch data');
     } finally {
       setIsFetching(false);
     }
   };
 
-  const loadData = async () => {
-    setIsLoading(true);
-    try {
-      setError(null);
-      const response = await axios.get('/api/data_loader');
-      setData(response.data.data);
-      onDataChange(response.data.data);
-    } catch (error) {
-      setError('Failed to load data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const loadData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     setError(null);
+  //     const response = await axios.get('/api/data_loader');
+  //     setData(response.data.data);
+  //     onDataChange(response.data.data);
+  //   } catch (error) {
+  //     setError('Failed to load data');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <Box display="flex" justifyContent="flex-end" alignItems="center">
