@@ -4,7 +4,7 @@
       "version": "detect",
       "defaultVersion": ""
     }
-  } ,
+  },
   "extends": [
     "next/core-web-vitals",
     "next/typescript",
@@ -16,7 +16,7 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "react/jsx-uses-react": "off",     
+    "react/jsx-uses-react": "off",
     "no-unused-vars": ["warn", { "varsIgnorePattern": "^_" }]
   }
 }

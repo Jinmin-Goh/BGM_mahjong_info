@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { Storage } from '@google-cloud/storage';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { load } from 'cheerio';
@@ -7,6 +8,13 @@ import { DataGroup } from '@/types/data';
 import animalNames from '@/data/animalNames';
 
 dotenv.config();
+
+const storage = new Storage({
+  projectId: process.env.GCLOUD_PROJECT_ID,
+  credentials: JSON.parse(process.env.KEY_FILE as string),
+});
+
+const bucketName = 'bgm-mahjong-data';
 
 async function parser(): Promise<string[]> {
   try {
@@ -105,8 +113,10 @@ async function loadMapping(): Promise<Record<string, string>> {
   if (mappingCache) return mappingCache;
 
   try {
-    const data = await fs.readFile('./src/data/name_mapping.json', 'utf-8');
-    mappingCache = JSON.parse(data);
+    const bucket = storage.bucket(bucketName);
+    const file = bucket.file('name_mapping.json');
+    const [contents] = await file.download();
+    mappingCache = JSON.parse(contents.toString());
     if (!mappingCache) {
       throw new Error('Error while loading name mapping data');
     }
@@ -120,10 +130,12 @@ async function loadMapping(): Promise<Record<string, string>> {
 
 async function saveMapping(mapping: Record<string, string>) {
   mappingCache = mapping;
-  await fs.writeFile(
-    './src/data/name_mapping.json',
-    JSON.stringify(mapping, null, 2)
-  );
+  await storage
+    .bucket(bucketName)
+    .file('name_mapping.json')
+    .save(JSON.stringify(mapping, null, 2), {
+      contentType: 'application/json',
+    });
 }
 
 async function findAvailableAnimal(usedAnimals: Set<string>) {
@@ -184,7 +196,12 @@ async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
 async function saveToJson(data_group: DataGroup[]): Promise<void> {
   try {
     const data_json = JSON.stringify(data_group, null, 2);
-    await fs.writeFile('./src/data/game_log.json', data_json);
+    await storage
+    .bucket(bucketName)
+    .file('game_log.json')
+    .save(data_json, {
+      contentType: 'application/json',
+    });
     console.log('Successfully wrote file');
   } catch (err) {
     console.error('Error writing file', err);
