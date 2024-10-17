@@ -3,7 +3,6 @@ import { Storage } from '@google-cloud/storage';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { load } from 'cheerio';
-import fs from 'fs/promises';
 import { DataGroup } from '@/types/data';
 import animalNames from '@/data/animalNames';
 
