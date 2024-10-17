@@ -20,7 +20,6 @@ import {
 import { format } from 'date-fns';
 import { DataGroup } from '@/types/data';
 import CloseIcon from '@mui/icons-material/Close';
-import { width } from '@mui/system';
 
 interface MainDataTableProps {
   data: DataGroup[];
@@ -189,7 +188,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
           <TableBody>
             {sortedData.length > 0 ? (
               sortedData.map((row) => (
-                <TableRow>
+                <TableRow key={format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}>
                   <TableCell component="th" scope="row">
                     {format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}
                   </TableCell>
