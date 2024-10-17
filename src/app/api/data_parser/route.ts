@@ -71,7 +71,7 @@ function dataProcess(data: string[]) {
         const cleanedYear = parseInt(year.replace('.', ''));
         const cleanedMonth = parseInt(month.replace('.', ''));
         const cleanedDay = parseInt(day.replace('.', ''));
-        const [_, minute, second] = timePart
+        const [, minute, second] = timePart
           .split(':')
           .map((num) => parseInt(num, 10));
 
@@ -145,8 +145,7 @@ async function getRandomAnimal(originalName: string): Promise<string> {
     mappingData[originalName] = tempName;
     await saveMapping(mappingData);
     return tempName;
-  }
-  else {
+  } else {
     mappingData[originalName] = availableAnimal;
     await saveMapping(mappingData);
     return availableAnimal;

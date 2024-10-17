@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       const response = await axios.get('/api/data_loader');
       setData(response.data.data);
     } catch (err) {
-      console.error("Error:", err);
+      console.error('Error:', err);
       setError('Failed to load data');
     }
   };

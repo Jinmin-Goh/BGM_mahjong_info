@@ -9,7 +9,7 @@ import ExpandLessRounded from '@mui/icons-material/ExpandLessRounded';
 
 interface MainInfoProps {
   parentData: DataGroup[] | null;
-  onDataChange: (changedData: DataGroup[] | null) => void;
+  onDataChange: (_changedData: DataGroup[] | null) => void;
 }
 
 export default function MainInfo({ parentData, onDataChange }: MainInfoProps) {

@@ -9,7 +9,7 @@ import Update from '@mui/icons-material/Update';
 import HourglassBottomRounded from '@mui/icons-material/HourglassBottomRounded';
 
 interface FetchLoadButtonProps {
-  onDataChange: (data: DataGroup[] | null) => void;
+  onDataChange: (_data: DataGroup[] | null) => void;
 }
 
 export default function FetchLoadButton({
@@ -28,7 +28,7 @@ export default function FetchLoadButton({
       setData(response.data.data);
       onDataChange(response.data.data);
     } catch (err) {
-      console.log("Error:", err);
+      console.log('Error:', err);
       setError('Failed to fetch data');
     } finally {
       setIsFetching(false);
