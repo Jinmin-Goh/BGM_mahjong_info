@@ -14,9 +14,13 @@ import {
   Box,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { format } from 'date-fns';
 import { DataGroup } from '@/types/data';
+import CloseIcon from '@mui/icons-material/Close';
+import { width } from '@mui/system';
 
 interface MainDataTableProps {
   data: DataGroup[];
@@ -35,13 +39,17 @@ export default function MainDataTable({ data }: MainDataTableProps) {
     setOrderBy(property);
   };
 
+  const clearFilter = () => {
+    setFilter('');
+  };
+
   const filteredData = React.useMemo(() => {
     return data.filter(
       (row) =>
-        row.first_place_name.toLowerCase().includes(filter.toLowerCase()) ||
-        row.second_place_name.toLowerCase().includes(filter.toLowerCase()) ||
-        row.third_place_name.toLowerCase().includes(filter.toLowerCase()) ||
-        row.fourth_place_name.toLowerCase().includes(filter.toLowerCase())
+        row.firstPlaceName.toLowerCase().includes(filter.toLowerCase()) ||
+        row.secondPlaceName.toLowerCase().includes(filter.toLowerCase()) ||
+        row.thirdPlaceName.toLowerCase().includes(filter.toLowerCase()) ||
+        row.fourthPlaceName.toLowerCase().includes(filter.toLowerCase())
     );
   }, [filter, data]);
 
@@ -60,7 +68,17 @@ export default function MainDataTable({ data }: MainDataTableProps) {
           label="대국자 이름"
           variant="outlined"
           value={filter}
+          sx={{ width: 200 }}
           onChange={(e) => setFilter(e.target.value)}
+          InputProps={{
+            endAdornment: filter && (
+              <InputAdornment position="end">
+                <IconButton onClick={clearFilter}>
+                  <CloseIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       </Box>
       <TableContainer component={Paper} style={{ marginTop: '20px' }}>
@@ -78,72 +96,72 @@ export default function MainDataTable({ data }: MainDataTableProps) {
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'first_place_name'}
-                  direction={orderBy === 'first_place_name' ? order : 'asc'}
-                  onClick={() => handleRequestSort('first_place_name')}
+                  active={orderBy === 'firstPlaceName'}
+                  direction={orderBy === 'firstPlaceName' ? order : 'asc'}
+                  onClick={() => handleRequestSort('firstPlaceName')}
                 >
                   <strong>1위</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'first_place_score'}
-                  direction={orderBy === 'first_place_score' ? order : 'asc'}
-                  onClick={() => handleRequestSort('first_place_score')}
+                  active={orderBy === 'firstPlaceScore'}
+                  direction={orderBy === 'firstPlaceScore' ? order : 'asc'}
+                  onClick={() => handleRequestSort('firstPlaceScore')}
                 >
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'second_place_name'}
-                  direction={orderBy === 'second_place_name' ? order : 'asc'}
-                  onClick={() => handleRequestSort('second_place_name')}
+                  active={orderBy === 'secondPlaceName'}
+                  direction={orderBy === 'secondPlaceName' ? order : 'asc'}
+                  onClick={() => handleRequestSort('secondPlaceName')}
                 >
                   <strong>2위</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'second_place_score'}
-                  direction={orderBy === 'second_place_score' ? order : 'asc'}
-                  onClick={() => handleRequestSort('second_place_score')}
+                  active={orderBy === 'secondPlaceScore'}
+                  direction={orderBy === 'secondPlaceScore' ? order : 'asc'}
+                  onClick={() => handleRequestSort('secondPlaceScore')}
                 >
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'third_place_name'}
-                  direction={orderBy === 'third_place_name' ? order : 'asc'}
-                  onClick={() => handleRequestSort('third_place_name')}
+                  active={orderBy === 'thirdPlaceName'}
+                  direction={orderBy === 'thirdPlaceName' ? order : 'asc'}
+                  onClick={() => handleRequestSort('thirdPlaceName')}
                 >
                   <strong>3위</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'third_place_score'}
-                  direction={orderBy === 'third_place_score' ? order : 'asc'}
-                  onClick={() => handleRequestSort('third_place_score')}
+                  active={orderBy === 'thirdPlaceScore'}
+                  direction={orderBy === 'thirdPlaceScore' ? order : 'asc'}
+                  onClick={() => handleRequestSort('thirdPlaceScore')}
                 >
                   <strong>점수</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'fourth_place_name'}
-                  direction={orderBy === 'fourth_place_name' ? order : 'asc'}
-                  onClick={() => handleRequestSort('fourth_place_name')}
+                  active={orderBy === 'fourthPlaceName'}
+                  direction={orderBy === 'fourthPlaceName' ? order : 'asc'}
+                  onClick={() => handleRequestSort('fourthPlaceName')}
                 >
                   <strong>4위</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right" sx={{ backgroundColor: '#e3f0d3' }}>
                 <TableSortLabel
-                  active={orderBy === 'fourth_place_score'}
-                  direction={orderBy === 'fourth_place_score' ? order : 'asc'}
-                  onClick={() => handleRequestSort('fourth_place_score')}
+                  active={orderBy === 'fourthPlaceScore'}
+                  direction={orderBy === 'fourthPlaceScore' ? order : 'asc'}
+                  onClick={() => handleRequestSort('fourthPlaceScore')}
                 >
                   <strong>점수</strong>
                 </TableSortLabel>
@@ -175,14 +193,14 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                   <TableCell component="th" scope="row">
                     {format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}
                   </TableCell>
-                  <TableCell align="right">{row.first_place_name}</TableCell>
-                  <TableCell align="right">{row.first_place_score}</TableCell>
-                  <TableCell align="right">{row.second_place_name}</TableCell>
-                  <TableCell align="right">{row.second_place_score}</TableCell>
-                  <TableCell align="right">{row.third_place_name}</TableCell>
-                  <TableCell align="right">{row.third_place_score}</TableCell>
-                  <TableCell align="right">{row.fourth_place_name}</TableCell>
-                  <TableCell align="right">{row.fourth_place_score}</TableCell>
+                  <TableCell align="right">{row.firstPlaceName}</TableCell>
+                  <TableCell align="right">{row.firstPlaceScore}</TableCell>
+                  <TableCell align="right">{row.secondPlaceName}</TableCell>
+                  <TableCell align="right">{row.secondPlaceScore}</TableCell>
+                  <TableCell align="right">{row.thirdPlaceName}</TableCell>
+                  <TableCell align="right">{row.thirdPlaceScore}</TableCell>
+                  <TableCell align="right">{row.fourthPlaceName}</TableCell>
+                  <TableCell align="right">{row.fourthPlaceScore}</TableCell>
                   <TableCell align="right">{row.checksum}</TableCell>
                   <TableCell align="right">{row.comment}</TableCell>
                 </TableRow>

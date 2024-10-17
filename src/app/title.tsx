@@ -19,7 +19,7 @@ export default function Title() {
           BGM 기록작 대국 기록 인포
         </Typography>
       </Box>
-      <Box justifyContent="center" alignItems="center" minHeight="10vh">
+      <Box justifyContent="center" alignItems="center" minHeight="5vh">
         <Typography
           variant="h1"
           align="center"

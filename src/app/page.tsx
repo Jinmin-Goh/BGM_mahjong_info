@@ -5,9 +5,9 @@ import axios from 'axios';
 import { DataGroup } from '@/types/data';
 import { Container } from '@mui/material';
 import Title from './title';
-import FetchLoadButton from './fetch_load_button';
-import MainDataTable from './main_data_table';
-import LoadingData from './loading_data';
+import MainInfo from './mainInfo';
+import MainDataTable from './mainDataTable';
+import LoadingData from './loadingData';
 
 const Home: React.FC = () => {
   const [data, setData] = useState<DataGroup[] | null>(null);
@@ -23,8 +23,8 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleFetchLoadDataChange = (data: DataGroup[] | null) => {
-    setData(data);
+  const handleChildDataUpdate = (updatedData: DataGroup[] | null) => {
+    setData(updatedData);
   };
 
   // initial data load
@@ -35,9 +35,15 @@ const Home: React.FC = () => {
   return (
     <Container maxWidth="xl" style={{ marginTop: '40px' }}>
       <Title />
-      <FetchLoadButton onDataChange={handleFetchLoadDataChange} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {data ? <MainDataTable data={data} /> : <LoadingData />}
+      {data ? (
+        <Container maxWidth="xl" style={{ marginTop: '40px' }}>
+          <MainInfo parentData={data} onDataChange={handleChildDataUpdate} />
+          <MainDataTable data={data} />
+        </Container>
+      ) : (
+        <LoadingData />
+      )}
     </Container>
   );
 };

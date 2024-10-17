@@ -37,14 +37,14 @@ function dataProcess(data: string[]) {
   const data_group: DataGroup[] = [];
   const keys: Array<keyof DataGroup> = [
     'timestamp',
-    'first_place_name',
-    'first_place_score',
-    'second_place_name',
-    'second_place_score',
-    'third_place_name',
-    'third_place_score',
-    'fourth_place_name',
-    'fourth_place_score',
+    'firstPlaceName',
+    'firstPlaceScore',
+    'secondPlaceName',
+    'secondPlaceScore',
+    'thirdPlaceName',
+    'thirdPlaceScore',
+    'fourthPlaceName',
+    'fourthPlaceScore',
     'checksum',
     'comment',
   ];
@@ -143,29 +143,29 @@ async function getRandomAnimal(originalName: string): Promise<string> {
 }
 
 async function animalizeComment(data: DataGroup): Promise<string> {
-  const firstPlaceName = await getRandomAnimal(data.first_place_name);
-  const secondPlaceName = await getRandomAnimal(data.second_place_name);
-  const thirdPlaceName = await getRandomAnimal(data.third_place_name);
-  const fourthPlaceName = await getRandomAnimal(data.fourth_place_name);
+  const firstPlaceName = await getRandomAnimal(data.firstPlaceName);
+  const secondPlaceName = await getRandomAnimal(data.secondPlaceName);
+  const thirdPlaceName = await getRandomAnimal(data.thirdPlaceName);
+  const fourthPlaceName = await getRandomAnimal(data.fourthPlaceName);
 
   if (!data.comment) {
     return '';
   }
   return data.comment
-    .replaceAll(data.first_place_name, firstPlaceName)
-    .replaceAll(data.second_place_name, secondPlaceName)
-    .replaceAll(data.third_place_name, thirdPlaceName)
-    .replaceAll(data.fourth_place_name, fourthPlaceName);
+    .replaceAll(data.firstPlaceName, firstPlaceName)
+    .replaceAll(data.secondPlaceName, secondPlaceName)
+    .replaceAll(data.thirdPlaceName, thirdPlaceName)
+    .replaceAll(data.fourthPlaceName, fourthPlaceName);
 }
 
 async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
   return Promise.all(
     data_group.map(async (data) => ({
       ...data,
-      first_place_name: await getRandomAnimal(data.first_place_name),
-      second_place_name: await getRandomAnimal(data.second_place_name),
-      third_place_name: await getRandomAnimal(data.third_place_name),
-      fourth_place_name: await getRandomAnimal(data.fourth_place_name),
+      firstPlaceName: await getRandomAnimal(data.firstPlaceName),
+      secondPlaceName: await getRandomAnimal(data.secondPlaceName),
+      thirdPlaceName: await getRandomAnimal(data.thirdPlaceName),
+      fourthPlaceName: await getRandomAnimal(data.fourthPlaceName),
       comment: await animalizeComment(data),
     }))
   );
