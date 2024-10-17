@@ -39,6 +39,11 @@ next-env.d.ts
 .env
 .eslintrc
 .prettierrc
+.prettierignore
 eslint.config.mjs
 game_log.json
 name_mapping.json
+next.config.mjs
+package-lock.json
+postcss.config.mjs
+tailwind.config.ts
