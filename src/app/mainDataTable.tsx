@@ -21,6 +21,7 @@ import { format } from 'date-fns';
 import { DataGroup } from '@/types/data';
 import CloseIcon from '@mui/icons-material/Close';
 
+
 interface MainDataTableProps {
   data: DataGroup[];
 }
