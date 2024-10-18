@@ -24,7 +24,12 @@ export default function FetchLoadButton({
     setIsFetching(true);
     try {
       setError(null);
-      const response = await axios.get('/api/data_parser');
+      const response = await axios.get('/api/data_parser', {
+        headers: {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+        },
+      });
       setData(response.data.data);
       onDataChange(response.data.data);
     } catch (err) {

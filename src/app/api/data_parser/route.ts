@@ -21,7 +21,12 @@ async function parser(): Promise<string[]> {
     const url = process.env.WEB_URL;
     if (!url) throw new Error('WEB_URL is not defined in .env');
 
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+      },
+    });
     const html = response.data;
 
     // parsing html
@@ -213,8 +218,9 @@ export async function GET() {
     const data_group = dataProcess(data);
     const annonymous_data = await animalizeName(data_group);
     await saveToJson(annonymous_data);
-
-    return NextResponse.json({ data: annonymous_data });
+    const response = NextResponse.json({ data: annonymous_data });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (err) {
     return NextResponse.json(
       { error: `Failed to fetch and parse data: ${err}` },

@@ -16,7 +16,12 @@ const Home: React.FC = () => {
   const loadData = async () => {
     try {
       setError(null);
-      const response = await axios.get('/api/data_loader');
+      const response = await axios.get('/api/data_loader', {
+        headers: {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+        },
+      });
       setData(response.data.data);
     } catch (err) {
       console.error('Error:', err);
