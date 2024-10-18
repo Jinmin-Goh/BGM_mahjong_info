@@ -89,7 +89,6 @@ function dataProcess(data: string[]) {
         const isoString = `${cleanedYear}-${String(cleanedMonth).padStart(2, '0')}-${String(cleanedDay).padStart(2, '0')}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}+09:00`;
 
         (group[keys[j]] as Date) = new Date(isoString);
-        console.log(isoString);
       } else if (j == 2 || j == 4 || j == 6 || j == 8 || j == 9) {
         (group[keys[j]] as number) = parseInt(data[i + j], 10);
       } else {
