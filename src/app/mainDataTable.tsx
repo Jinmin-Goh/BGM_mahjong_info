@@ -17,10 +17,9 @@ import {
   InputAdornment,
   IconButton,
 } from '@mui/material';
-import { format } from 'date-fns';
+import moment from 'moment-timezone';
 import { DataGroup } from '@/types/data';
 import CloseIcon from '@mui/icons-material/Close';
-
 
 interface MainDataTableProps {
   data: DataGroup[];
@@ -189,9 +188,15 @@ export default function MainDataTable({ data }: MainDataTableProps) {
           <TableBody>
             {sortedData.length > 0 ? (
               sortedData.map((row) => (
-                <TableRow key={format(row.timestamp, 'yyyy년 MM월 dd일 HH시 mm분')}>
+                <TableRow
+                  key={moment
+                    .tz(row.timestamp, 'Asia/Seoul')
+                    .format('YYYY년 MM월 DD일 HH시 mm분')}
+                >
                   <TableCell component="th" scope="row">
-                    {format(row.timestamp, 'yyyy년 MM월 dd일 HH시 mm분')}
+                    {moment
+                      .tz(row.timestamp, 'Asia/Seoul')
+                      .format('YYYY년 MM월 DD일 HH시 mm분')}
                   </TableCell>
                   <TableCell align="right">{row.firstPlaceName}</TableCell>
                   <TableCell align="right">{row.firstPlaceScore}</TableCell>

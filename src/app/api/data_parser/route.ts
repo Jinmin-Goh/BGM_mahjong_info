@@ -195,10 +195,7 @@ async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
 async function saveToJson(data_group: DataGroup[]): Promise<void> {
   try {
     const data_json = JSON.stringify(data_group, null, 2);
-    await storage
-    .bucket(bucketName)
-    .file('game_log.json')
-    .save(data_json, {
+    await storage.bucket(bucketName).file('game_log.json').save(data_json, {
       contentType: 'application/json',
     });
     console.log('Successfully wrote file');
