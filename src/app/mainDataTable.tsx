@@ -189,14 +189,12 @@ export default function MainDataTable({ data }: MainDataTableProps) {
             {sortedData.length > 0 ? (
               sortedData.map((row) => (
                 <TableRow
-                  key={moment
-                    .tz(row.timestamp, 'Asia/Seoul')
-                    .format('YYYY년 MM월 DD일 HH시 mm분')}
+                  key={moment(row.timestamp).format(
+                    'YYYY년 MM월 DD일 HH시 mm분'
+                  )}
                 >
                   <TableCell component="th" scope="row">
-                    {moment
-                      .tz(row.timestamp, 'Asia/Seoul')
-                      .format('YYYY년 MM월 DD일 HH시 mm분')}
+                    {moment(row.timestamp).format('YYYY년 MM월 DD일 HH시 mm분')}
                   </TableCell>
                   <TableCell align="right">{row.firstPlaceName}</TableCell>
                   <TableCell align="right">{row.firstPlaceScore}</TableCell>
