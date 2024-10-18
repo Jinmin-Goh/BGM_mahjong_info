@@ -37,11 +37,5 @@ next-env.d.ts
 
 .vscode
 .env
-.eslintrc
-.prettierrc
-.prettierignore
-eslint.config.mjs
 game_log.json
 name_mapping.json
-next.config.mjs
-package-lock.json
