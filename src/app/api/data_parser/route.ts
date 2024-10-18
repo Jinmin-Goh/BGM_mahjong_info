@@ -66,6 +66,9 @@ function dataProcess(data: string[]) {
 
     for (let j = 0; j < keys.length; j++) {
       if (j == 0) {
+        if (i == 2 * keys.length) {
+          console.log(data[i + j]);
+        }
         // date parsing
         const dateString = data[i + j];
         const isPM = dateString.includes('오후');
