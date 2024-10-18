@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import { Storage } from '@google-cloud/storage';
 import dotenv from 'dotenv';
 import axios from 'axios';
@@ -206,7 +206,7 @@ async function saveToJson(data_group: DataGroup[]): Promise<void> {
 
 export const fetchCache = 'force-no-store';
 
-export async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const data = await parser();
 
@@ -220,10 +220,13 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     const data_group = dataProcess(data);
     const annonymous_data = await animalizeName(data_group);
     await saveToJson(annonymous_data);
-    return res.status(200).json(annonymous_data);
+    const response = NextResponse.json({ data: annonymous_data });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (err) {
-    return res
-      .status(500)
-      .json({ error: `Failed to fetch and parse data: ${err}` });
+    return NextResponse.json(
+      { error: `Failed to fetch and parse data: ${err}` },
+      { status: 500 }
+    );
   }
 }
