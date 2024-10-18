@@ -189,9 +189,9 @@ export default function MainDataTable({ data }: MainDataTableProps) {
           <TableBody>
             {sortedData.length > 0 ? (
               sortedData.map((row) => (
-                <TableRow key={format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}>
+                <TableRow key={format(row.timestamp, 'yyyy년 MM월 dd일 HH시 mm분')}>
                   <TableCell component="th" scope="row">
-                    {format(row.timestamp, 'yyyy-MM-dd HH:mm:ss')}
+                    {format(row.timestamp, 'yyyy년 MM월 dd일 HH시 mm분')}
                   </TableCell>
                   <TableCell align="right">{row.firstPlaceName}</TableCell>
                   <TableCell align="right">{row.firstPlaceScore}</TableCell>
