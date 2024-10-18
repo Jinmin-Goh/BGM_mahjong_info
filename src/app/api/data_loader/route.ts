@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { Storage } from '@google-cloud/storage';
 
 const storage = new Storage({
@@ -11,7 +11,7 @@ const fileName = 'game_log.json';
 
 export const fetchCache = 'force-no-store';
 
-export async function GET() {
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     console.log('Loading data...');
     const bucket = storage.bucket(bucketName);
@@ -19,11 +19,9 @@ export async function GET() {
     const [contents] = await file.download();
     const data = JSON.parse(contents.toString());
     console.log('Successfully loaded data');
-    const response = NextResponse.json({ data: data });
-    response.headers.set('Cache-Control', 'no-store');
-    return response;
+    return res.status(200).json(data);
   } catch (err) {
     console.error('Error during loading data:', err);
-    return NextResponse.json({ error: 'Failed to load data' }, { status: 500 });
+    return res.status(500).json({ error: 'Failed to load data' });
   }
 }
