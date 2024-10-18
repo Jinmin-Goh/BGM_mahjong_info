@@ -21,7 +21,12 @@ async function parser(): Promise<string[]> {
     const url = process.env.WEB_URL;
     if (!url) throw new Error('WEB_URL is not defined in .env');
 
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+      },
+    });
     const html = response.data;
 
     // parsing html
