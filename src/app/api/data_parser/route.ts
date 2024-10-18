@@ -213,8 +213,9 @@ export async function GET() {
     const data_group = dataProcess(data);
     const annonymous_data = await animalizeName(data_group);
     await saveToJson(annonymous_data);
-
-    return NextResponse.json({ data: annonymous_data }).headers.set('Cache-Control', 'no-store');
+    const response = NextResponse.json({ data: annonymous_data });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (err) {
     return NextResponse.json(
       { error: `Failed to fetch and parse data: ${err}` },
