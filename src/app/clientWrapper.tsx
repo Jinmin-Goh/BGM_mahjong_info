@@ -7,6 +7,7 @@ const theme = createTheme({
   palette: {
     primary: { main: '#618833' },
     secondary: { main: '#ff4569' },
+    background: { default: '#f0f0f0' }
   },
   typography: {
     button: { fontSize: '1rem' },
