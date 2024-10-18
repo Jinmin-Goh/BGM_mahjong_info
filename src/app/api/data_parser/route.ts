@@ -204,6 +204,7 @@ async function saveToJson(data_group: DataGroup[]): Promise<void> {
   }
 }
 
+
 export const fetchCache = 'force-no-store';
 
 export async function GET() {
