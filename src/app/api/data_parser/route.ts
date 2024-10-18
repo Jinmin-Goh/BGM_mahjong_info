@@ -24,7 +24,7 @@ async function parser(): Promise<string[]> {
     const response = await axios.get(url, {
       headers: {
         'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
+        Pragma: 'no-cache',
       },
     });
     const html = response.data;

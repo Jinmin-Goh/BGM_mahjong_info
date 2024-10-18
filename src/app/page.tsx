@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       const response = await axios.get('/api/data_loader', {
         headers: {
           'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
+          Pragma: 'no-cache',
         },
       });
       setData(response.data.data);

@@ -27,7 +27,7 @@ export default function FetchLoadButton({
       const response = await axios.get('/api/data_parser', {
         headers: {
           'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
+          Pragma: 'no-cache',
         },
       });
       setData(response.data.data);
