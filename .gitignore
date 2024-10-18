@@ -46,4 +46,3 @@ name_mapping.json
 next.config.mjs
 package-lock.json
 postcss.config.mjs
-tailwind.config.ts
