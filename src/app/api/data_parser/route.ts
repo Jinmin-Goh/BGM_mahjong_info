@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Storage } from '@google-cloud/storage';
 import dotenv from 'dotenv';
-import axios from 'axios';
 import { load } from 'cheerio';
 import { DataGroup } from '@/types/data';
 import animalNames from '@/data/animalNames';
@@ -21,13 +20,10 @@ async function parser(): Promise<string[]> {
     const url = process.env.WEB_URL;
     if (!url) throw new Error('WEB_URL is not defined in .env');
 
-    const response = await axios.get(url, {
-      headers: {
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-      },
+    const response = await fetch(url, {
+      cache: 'no-store',
     });
-    const html = response.data;
+    const html = await response.text();
 
     // parsing html
     console.log('Parsing data...');
@@ -37,7 +33,6 @@ async function parser(): Promise<string[]> {
     data.each((i, elem) => {
       text_data.push($(elem).text());
     });
-
     return text_data;
   } catch (err) {
     console.error('Error during parsing:', err);
@@ -220,7 +215,7 @@ export async function GET() {
     const data_group = dataProcess(data);
     const annonymous_data = await animalizeName(data_group);
     await saveToJson(annonymous_data);
-    const response = NextResponse.json({ data: annonymous_data });
+    const response = NextResponse.json(annonymous_data);
     response.headers.set('Cache-Control', 'no-store');
     return response;
   } catch (err) {

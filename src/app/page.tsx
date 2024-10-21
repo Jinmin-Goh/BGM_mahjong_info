@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { DataGroup } from '@/types/data';
 import { Container } from '@mui/material';
 import Title from './title';
@@ -16,13 +15,10 @@ const Home: React.FC = () => {
   const loadData = async () => {
     try {
       setError(null);
-      const response = await axios.get('/api/data_loader', {
-        headers: {
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-        },
+      const response = await fetch('/api/data_loader', {
+        cache: 'no-store',
       });
-      setData(response.data.data);
+      setData(await response.json());
     } catch (err) {
       console.error('Error:', err);
       setError('Failed to load data');
