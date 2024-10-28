@@ -17,7 +17,8 @@ export async function GET() {
     const [contents] = await file.download();
     const data = JSON.parse(contents.toString());
     console.log('Successfully loaded data');
-    return NextResponse.json({ data: data });
+    const response = NextResponse.json(data);
+    return response;
   } catch (err) {
     console.error('Error during loading data:', err);
     return NextResponse.json({ error: 'Failed to load data' }, { status: 500 });
