@@ -18,7 +18,8 @@ const Home: React.FC = () => {
       const response = await fetch('/api/data_loader', {
         cache: 'no-store',
       });
-      setData(await response.json());
+      const result: DataGroup[] = await response.json();
+      setData(result);
     } catch (err) {
       console.error('Error:', err);
       setError('Failed to load data');

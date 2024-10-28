@@ -19,7 +19,7 @@ export async function GET() {
     const [contents] = await file.download();
     const data = JSON.parse(contents.toString());
     console.log('Successfully loaded data');
-    const response = NextResponse.json({ data: data });
+    const response = NextResponse.json(data);
     response.headers.set('Cache-Control', 'no-store');
     return response;
   } catch (err) {
