@@ -9,8 +9,6 @@ const storage = new Storage({
 const bucketName = 'bgm-mahjong-data';
 const fileName = 'game_log.json';
 
-export const fetchCache = 'force-no-store';
-
 export async function GET() {
   try {
     console.log('Loading data...');

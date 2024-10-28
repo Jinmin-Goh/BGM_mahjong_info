@@ -21,7 +21,9 @@ async function parser(): Promise<string[]> {
     if (!url) throw new Error('WEB_URL is not defined in .env');
 
     const response = await fetch(url, {
-      cache: 'no-store',
+      next: {
+        revalidate: 0,
+      }
     });
     const html = await response.text();
 
@@ -198,8 +200,6 @@ async function saveToJson(data_group: DataGroup[]): Promise<void> {
     console.error('Error writing file', err);
   }
 }
-
-export const fetchCache = 'force-no-store';
 
 export async function GET() {
   try {

@@ -16,7 +16,9 @@ const Home: React.FC = () => {
     try {
       setError(null);
       const response = await fetch('/api/data_loader', {
-        cache: 'no-store',
+        next: {
+          revalidate: 0,
+        }
       });
       const result: DataGroup[] = await response.json();
       setData(result);
