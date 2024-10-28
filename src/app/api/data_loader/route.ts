@@ -17,8 +17,7 @@ export async function GET() {
     const [contents] = await file.download();
     const data = JSON.parse(contents.toString());
     console.log('Successfully loaded data');
-    const response = NextResponse.json({ data: data });
-    response.headers.set('Cache-Control', 'no-store');
+    const response = NextResponse.json(data);
     return response;
   } catch (err) {
     console.error('Error during loading data:', err);

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import { DataGroup } from '@/types/data';
 import { Button, Box } from '@mui/material';
 import Update from '@mui/icons-material/Update';
@@ -24,14 +23,14 @@ export default function FetchLoadButton({
     setIsFetching(true);
     try {
       setError(null);
-      const response = await axios.get('/api/data_parser', {
-        headers: {
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-        },
+      const response = await fetch('/api/data_parser', {
+        next: {
+          revalidate: 0,
+        }
       });
-      setData(response.data.data);
-      onDataChange(response.data.data);
+      const data = await response.json();
+      setData(data);
+      onDataChange(data);
     } catch (err) {
       console.log('Error:', err);
       setError('Failed to fetch data');
