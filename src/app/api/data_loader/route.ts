@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { Storage } from '@google-cloud/storage';
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT_ID,
   credentials: JSON.parse(process.env.KEY_FILE as string),
