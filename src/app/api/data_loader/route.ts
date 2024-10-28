@@ -20,7 +20,6 @@ export async function GET() {
     const data = JSON.parse(contents.toString());
     console.log('Successfully loaded data');
     const response = NextResponse.json(data);
-    response.headers.set('Cache-Control', 'no-store');
     return response;
   } catch (err) {
     console.error('Error during loading data:', err);

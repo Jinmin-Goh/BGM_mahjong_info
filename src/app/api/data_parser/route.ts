@@ -216,7 +216,6 @@ export async function GET() {
     const annonymous_data = await animalizeName(data_group);
     await saveToJson(annonymous_data);
     const response = NextResponse.json(annonymous_data);
-    response.headers.set('Cache-Control', 'no-store');
     return response;
   } catch (err) {
     return NextResponse.json(
