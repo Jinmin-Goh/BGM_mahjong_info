@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
 export default function RulesPage() {
   return (
