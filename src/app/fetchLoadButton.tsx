@@ -26,7 +26,7 @@ export default function FetchLoadButton({
       const response = await fetch('/api/data_parser', {
         next: {
           revalidate: 0,
-        }
+        },
       });
       const data = await response.json();
       setData(data);

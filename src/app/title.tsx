@@ -23,7 +23,7 @@ export default function Title() {
         <Typography
           variant="h1"
           align="center"
-          sx={{ fontSize: '2rem' }}
+          sx={{ fontSize: '2rem', fontWeight: 'regular' }}
           gutterBottom
         >
           &quot;麻雀って楽しいよね！&quot;

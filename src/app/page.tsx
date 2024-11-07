@@ -18,7 +18,7 @@ const Home: React.FC = () => {
       const response = await fetch('/api/data_loader', {
         next: {
           revalidate: 0,
-        }
+        },
       });
       const result: DataGroup[] = await response.json();
       setData(result);

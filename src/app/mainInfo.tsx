@@ -50,7 +50,7 @@ export default function MainInfo({ parentData, onDataChange }: MainInfoProps) {
       <Typography
         variant="h1"
         align="center"
-        sx={{ fontSize: '1.3rem', lineHeight: 1.5 }}
+        sx={{ fontSize: '1.3rem', lineHeight: 1.5, fontWeight: 'regular' }}
       >
         기록 시작 일자는 2024년 6월 18일입니다.
         <br />
@@ -62,7 +62,7 @@ export default function MainInfo({ parentData, onDataChange }: MainInfoProps) {
         <Typography
           variant="h1"
           align="center"
-          sx={{ fontSize: '1.3rem', lineHeight: 1.5 }}
+          sx={{ fontSize: '1.3rem', lineHeight: 1.5, fontWeight: 'regular' }}
         >
           역대 최고점은 ???점(유저명), 최저점은 ???점(유저명)입니다.
           <br />

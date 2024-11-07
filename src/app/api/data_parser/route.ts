@@ -26,7 +26,7 @@ async function parser(): Promise<string[]> {
     const response = await fetch(url, {
       next: {
         revalidate: 0,
-      }
+      },
     });
     const html = await response.text();
 
