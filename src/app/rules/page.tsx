@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Container, Typography } from '@mui/material';
+import ReturnMainButton from './returnMainButton';
 
 export default function RulesPage() {
   return (
@@ -10,7 +11,11 @@ export default function RulesPage() {
         justifyContent="center"
         alignItems="center"
         minHeight="15vh"
+        position="relative"
       >
+        <Box position="absolute" left={40}>
+          <ReturnMainButton />
+        </Box>
         <Typography
           variant="h1"
           align="center"
