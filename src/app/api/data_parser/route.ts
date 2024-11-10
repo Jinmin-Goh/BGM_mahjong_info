@@ -35,11 +35,11 @@ async function parser(): Promise<string[]> {
     console.log('Parsing data...');
     const $ = load(html);
     const data = $(process.env.DATA_POS || '');
-    const text_data: string[] = [];
+    const textData: string[] = [];
     data.each((i, elem) => {
-      text_data.push($(elem).text());
+      textData.push($(elem).text());
     });
-    return text_data;
+    return textData;
   } catch (err) {
     console.error('Error during parsing:', err);
     return [];
@@ -47,7 +47,7 @@ async function parser(): Promise<string[]> {
 }
 
 function dataProcess(data: string[]) {
-  const data_group: DataGroup[] = [];
+  const dataGroup: DataGroup[] = [];
   const keys: Array<keyof DataGroup> = [
     'timestamp',
     'firstPlaceName',
@@ -102,9 +102,9 @@ function dataProcess(data: string[]) {
       }
     }
 
-    data_group.push(group as DataGroup);
+    dataGroup.push(group as DataGroup);
   }
-  return data_group;
+  return dataGroup;
 }
 
 let mappingCache: Record<string, string> | null = null;
@@ -180,9 +180,9 @@ async function animalizeComment(data: DataGroup): Promise<string> {
     .replaceAll(data.fourthPlaceName, fourthPlaceName);
 }
 
-async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
+async function animalizeName(dataGroup: DataGroup[]): Promise<DataGroup[]> {
   return Promise.all(
-    data_group.map(async (data) => ({
+    dataGroup.map(async (data) => ({
       ...data,
       firstPlaceName: await getRandomAnimal(data.firstPlaceName),
       secondPlaceName: await getRandomAnimal(data.secondPlaceName),
@@ -193,10 +193,10 @@ async function animalizeName(data_group: DataGroup[]): Promise<DataGroup[]> {
   );
 }
 
-async function saveToJson(data_group: DataGroup[]): Promise<void> {
+async function saveToJson(dataGroup: DataGroup[], fileName: string): Promise<void> {
   try {
-    const data_json = JSON.stringify(data_group, null, 2);
-    await storage.bucket(bucketName).file('game_log.json').save(data_json, {
+    const dataJson = JSON.stringify(dataGroup, null, 2);
+    await storage.bucket(bucketName).file(fileName).save(dataJson, {
       contentType: 'application/json',
     });
     console.log('Successfully wrote file');
@@ -216,11 +216,11 @@ export async function GET() {
       console.log('Successfully parsed data');
     }
 
-    const data_group = dataProcess(data);
-    const annonymous_data = await animalizeName(data_group);
-    await saveToJson(annonymous_data);
-    await metadataProcess(annonymous_data);
-    const response = NextResponse.json(annonymous_data);
+    const dataGroup = dataProcess(data);
+    const annonymousData = await animalizeName(dataGroup);
+    await saveToJson(annonymousData, 'game_log.json');
+    await metadataProcess(annonymousData);
+    const response = NextResponse.json(annonymousData);
     return response;
   } catch (err) {
     return NextResponse.json(
