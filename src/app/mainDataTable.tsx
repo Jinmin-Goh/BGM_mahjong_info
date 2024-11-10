@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import moment from 'moment-timezone';
 import { DataGroup } from '@/types/data';
+import RulesButton from './rulesButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 interface MainDataTableProps {
@@ -62,7 +63,16 @@ export default function MainDataTable({ data }: MainDataTableProps) {
 
   return (
     <Container maxWidth="xl" style={{ marginTop: '40px' }}>
-      <Box display="flex" justifyContent="center" marginBottom="20px">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginBottom="20px"
+        position="relative"
+      >
+        <Box position="absolute" left={0}>
+          <RulesButton />
+        </Box>
         <TextField
           label="대국자 이름"
           variant="outlined"
