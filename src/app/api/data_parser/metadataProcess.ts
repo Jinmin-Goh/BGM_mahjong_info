@@ -1,8 +1,19 @@
 import { Metadata } from '@/types/metadata';
 import { DataGroup } from '@/types/data';
 
-export async function metadataProcess(totalData: DataGroup[]) {
-  const metadata: Partial<Metadata> = {};
+export function metadataProcess(totalData: DataGroup[]) {
+  const metadata: Metadata = {
+    'totalPlayCount': 0,
+    'totalPlayerCount': 0,
+    'totalHighestScore': 30000,
+    'totalHighestScorePlayer': '',
+    'totalLowestScore': 30000,
+    'totalLowestScorePlayer': '',
+    'totalMostPlayedPlayer': '',
+    'totalMostPlayedPlayerCount': 0,
+    'totalMostPlayedDate': new Date(),
+    'totalMostPlayedDateCount': 0,
+  };
 
   let playCount = 0;
   let highestScore = -2000000;
@@ -91,6 +102,8 @@ export async function metadataProcess(totalData: DataGroup[]) {
   metadata['totalMostPlayedPlayerCount'] = mostPlayedPlayerCount;
   metadata['totalMostPlayedDate'] = mostPlayedDate;
   metadata['totalMostPlayedDateCount'] = mostPlayedDateCount;
+
+  console.log(metadata)
 
   return metadata;
 }
