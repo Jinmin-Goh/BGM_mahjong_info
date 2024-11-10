@@ -194,7 +194,10 @@ async function animalizeName(dataGroup: DataGroup[]): Promise<DataGroup[]> {
   );
 }
 
-async function saveToJson(dataGroup: DataGroup[] | Metadata, fileName: string): Promise<void> {
+async function saveToJson(
+  dataGroup: DataGroup[] | Metadata,
+  fileName: string
+): Promise<void> {
   try {
     const dataJson = JSON.stringify(dataGroup, null, 2);
     await storage.bucket(bucketName).file(fileName).save(dataJson, {
@@ -221,7 +224,7 @@ export async function GET() {
     const annonymousData = await animalizeName(dataGroup);
     await saveToJson(annonymousData, 'game_log.json');
     const metadata = metadataProcess(annonymousData);
-    await saveToJson(metadata, 'metadata_log.json')
+    await saveToJson(metadata, 'metadata_log.json');
     const response = NextResponse.json(annonymousData);
     return response;
   } catch (err) {

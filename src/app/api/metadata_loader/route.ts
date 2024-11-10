@@ -24,6 +24,9 @@ export async function GET() {
     return response;
   } catch (err) {
     console.error('Error during loading metadata:', err);
-    return NextResponse.json({ error: 'Failed to load metadata' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to load metadata' },
+      { status: 500 }
+    );
   }
 }
