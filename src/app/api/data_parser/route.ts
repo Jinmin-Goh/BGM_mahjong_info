@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { load } from 'cheerio';
 import { DataGroup } from '@/types/data';
 import animalNames from '@/data/animalNames';
+import { metadataProcess } from './metadataProcess';
 
 dotenv.config();
 
@@ -218,6 +219,7 @@ export async function GET() {
     const data_group = dataProcess(data);
     const annonymous_data = await animalizeName(data_group);
     await saveToJson(annonymous_data);
+    await metadataProcess(annonymous_data);
     const response = NextResponse.json(annonymous_data);
     return response;
   } catch (err) {
