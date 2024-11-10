@@ -1,0 +1,12 @@
+{
+  "totalPlayCount": 500,
+  "totalPlayerCount": 20,
+  "totalHighestScore": 30000,
+  "totalHighestScorePlayer": "AAA",
+  "totalLowestScore": 30000,
+  "totalLowestScorePlayer": "BBB",
+  "totalMostPlayedPlayer": "CCC",
+  "totalMostPlayedPlayerCount": 100,
+  "totalMostPlayedDate": "2024-09-02T15:00:00.000Z",
+  "totalMostPlayedDateCount": 10
+}

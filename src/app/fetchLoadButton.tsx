@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { DataGroup } from '@/types/data';
+import { Metadata } from '@/types/metadata';
 import { Button, Box } from '@mui/material';
 import Update from '@mui/icons-material/Update';
 // import Upload from '@mui/icons-material/Upload';
@@ -9,12 +10,15 @@ import HourglassBottomRounded from '@mui/icons-material/HourglassBottomRounded';
 
 interface FetchLoadButtonProps {
   onDataChange: (_data: DataGroup[] | null) => void;
+  onMetadataChange: (_metadata: Metadata | null) => void;
 }
 
 export default function FetchLoadButton({
   onDataChange,
+  onMetadataChange,
 }: FetchLoadButtonProps) {
   const [, setData] = useState<DataGroup[] | null>(null);
+  const [, setMetadata] = useState<Metadata | null>(null);
   const [, setError] = useState<string | null>(null);
   // const [, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -31,6 +35,14 @@ export default function FetchLoadButton({
       const data = await response.json();
       setData(data);
       onDataChange(data);
+      const metadataResponse = await fetch('/api/metadata_loader', {
+        next: {
+          revalidate: 0,
+        },
+      });
+      const metadata = await metadataResponse.json();
+      setMetadata(metadata);
+      onMetadataChange(metadata);
     } catch (err) {
       console.log('Error:', err);
       setError('Failed to fetch data');
