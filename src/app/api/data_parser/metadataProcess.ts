@@ -1,5 +1,7 @@
 import { Metadata } from '@/types/metadata';
 import { DataGroup } from '@/types/data';
+import { parseISO, format } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 
 export function metadataProcess(totalData: DataGroup[]) {
   const metadata: Metadata = {
@@ -62,26 +64,13 @@ export function metadataProcess(totalData: DataGroup[]) {
       playerPlayCountMap.get(totalData[i].fourthPlaceName) + 1
     );
 
-    const offsetMinutes = -new Date().getTimezoneOffset();
-    const sign = offsetMinutes >= 0 ? '+' : '-';
-    const hours = String(Math.floor(Math.abs(offsetMinutes) / 60)).padStart(
-      2,
-      '0'
-    );
-    const minutes = String(Math.abs(offsetMinutes) % 60).padStart(2, '0');
-    const localTimeZoneOffset = `${sign}${hours}:${minutes}`;
-    const currDate =
-      totalData[i].timestamp.getFullYear().toString() +
-      '-' +
-      (totalData[i].timestamp.getMonth() + 1).toString().padStart(2, '0') +
-      '-' +
-      totalData[i].timestamp.getDate().toString().padStart(2, '0') +
-      ' 00:00:00' +
-      localTimeZoneOffset;
-    if (!datePlayCountMap.has(currDate)) {
-      datePlayCountMap.set(currDate, 0);
+    const date = parseISO(totalData[i].timestamp.toISOString());
+    const zonedDate = toZonedTime(date, 'Asia/Seoul');
+    const formattedDate = format(zonedDate, 'yyyy-MM-dd') + ' 00:00:00+09:00';
+    if (!datePlayCountMap.has(formattedDate)) {
+      datePlayCountMap.set(formattedDate, 0);
     }
-    datePlayCountMap.set(currDate, datePlayCountMap.get(currDate) + 1);
+    datePlayCountMap.set(formattedDate, datePlayCountMap.get(formattedDate) + 1);
   }
 
   let mostPlayedPlayer = '';
@@ -112,8 +101,6 @@ export function metadataProcess(totalData: DataGroup[]) {
   metadata['totalMostPlayedPlayerCount'] = mostPlayedPlayerCount;
   metadata['totalMostPlayedDate'] = mostPlayedDate;
   metadata['totalMostPlayedDateCount'] = mostPlayedDateCount;
-
-  console.log(metadata);
 
   return metadata;
 }
