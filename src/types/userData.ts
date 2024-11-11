@@ -16,6 +16,7 @@ export interface UserData {
   secondPlaceCount: number;
   thirdPlaceCount: number;
   fourthPlaceCount: number;
+  tobiCount: number;
   firstPlayDate: Date;
   recentPlayDate: Date;
   userHighestScore: number;
