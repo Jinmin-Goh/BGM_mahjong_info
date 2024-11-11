@@ -1,4 +1,4 @@
-export interface DataGroup {
+export interface UserData {
   userName: string;
   currentPlace: number;
   totalUma: number;
@@ -21,4 +21,3 @@ export interface DataGroup {
   userHighestScore: number;
   userLowestScore: number;
 }
-  
