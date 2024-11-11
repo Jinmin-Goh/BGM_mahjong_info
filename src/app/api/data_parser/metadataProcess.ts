@@ -70,7 +70,10 @@ export function metadataProcess(totalData: DataGroup[]) {
     if (!datePlayCountMap.has(formattedDate)) {
       datePlayCountMap.set(formattedDate, 0);
     }
-    datePlayCountMap.set(formattedDate, datePlayCountMap.get(formattedDate) + 1);
+    datePlayCountMap.set(
+      formattedDate,
+      datePlayCountMap.get(formattedDate) + 1
+    );
   }
 
   let mostPlayedPlayer = '';
