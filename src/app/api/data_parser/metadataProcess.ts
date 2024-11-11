@@ -62,7 +62,7 @@ export function metadataProcess(totalData: DataGroup[]) {
       playerPlayCountMap.get(totalData[i].fourthPlaceName) + 1
     );
 
-    const offsetMinutes = -totalData[i].timestamp.getTimezoneOffset();
+    const offsetMinutes = -new Date().getTimezoneOffset();
     const sign = offsetMinutes >= 0 ? '+' : '-';
     const hours = String(Math.floor(Math.abs(offsetMinutes) / 60)).padStart(
       2,
@@ -78,7 +78,6 @@ export function metadataProcess(totalData: DataGroup[]) {
       totalData[i].timestamp.getDate().toString().padStart(2, '0') +
       ' 00:00:00' +
       localTimeZoneOffset;
-    console.log(currDate);
     if (!datePlayCountMap.has(currDate)) {
       datePlayCountMap.set(currDate, 0);
     }
