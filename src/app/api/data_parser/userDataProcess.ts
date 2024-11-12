@@ -125,11 +125,12 @@ export function userDataProcess(totalData: DataGroup[]) {
     (a, b) => b[1] - a[1]
   );
 
-  sortedUmaList.forEach(([name, ], idx) => {
+  sortedUmaList.forEach(([name], idx) => {
     const userData = userDataMap.get(name)!;
     userData.currentPlace = idx + 1;
     userDataMap.set(name, userData);
   });
 
-  console.log(userDataMap);
+  const userDataGroup = Object.fromEntries(userDataMap);
+  return userDataGroup;
 }

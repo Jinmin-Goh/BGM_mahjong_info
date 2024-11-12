@@ -4,8 +4,10 @@ import dotenv from 'dotenv';
 import { load } from 'cheerio';
 import { DataGroup } from '@/types/data';
 import { Metadata } from '@/types/metadata';
+import { UserData } from '@/types/userData';
 import animalNames from '@/data/animalNames';
 import { metadataProcess } from './metadataProcess';
+import { userDataProcess } from './userDataProcess';
 
 dotenv.config();
 
@@ -195,7 +197,12 @@ async function animalizeName(dataGroup: DataGroup[]): Promise<DataGroup[]> {
 }
 
 async function saveToJson(
-  dataGroup: DataGroup[] | Metadata,
+  dataGroup:
+    | DataGroup[]
+    | Metadata
+    | {
+        [k: string]: UserData;
+      },
   fileName: string
 ): Promise<void> {
   try {
@@ -225,6 +232,8 @@ export async function GET() {
     await saveToJson(annonymousData, 'game_log.json');
     const metadata = metadataProcess(annonymousData);
     await saveToJson(metadata, 'metadata_log.json');
+    const userDataGroup = userDataProcess(annonymousData);
+    await saveToJson(userDataGroup, 'user_data_log.json');
     const response = NextResponse.json(annonymousData);
     return response;
   } catch (err) {
