@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Container, Box, Typography } from '@mui/material';
 import { UserData } from '@/types/userData';
+import LoadingUserData from './loadingUserData';
 
 export default function UserInfoPage() {
   const params = useParams();
@@ -42,22 +43,26 @@ export default function UserInfoPage() {
         alignItems="center"
         minHeight="15vh"
       >
-        {userData?.has(userName) ? (
-          <Typography
-            variant="h1"
-            align="center"
-            sx={{ fontSize: '3rem', fontWeight: 'bold' }}
-          >
-            {userName}
-          </Typography>
+        {userData ? (
+          userData?.has(userName) ? (
+            <Typography
+              variant="h1"
+              align="center"
+              sx={{ fontSize: '3rem', fontWeight: 'bold' }}
+            >
+              {userName}
+            </Typography>
+          ) : (
+            <Typography
+              variant="h1"
+              align="center"
+              sx={{ fontSize: '3rem', fontWeight: 'bold' }}
+            >
+              기록이 없는 유저명입니다.
+            </Typography>
+          )
         ) : (
-          <Typography
-            variant="h1"
-            align="center"
-            sx={{ fontSize: '3rem', fontWeight: 'bold' }}
-          >
-            기록이 없는 유저명입니다.
-          </Typography>
+          <LoadingUserData />
         )}
       </Box>
     </Container>
