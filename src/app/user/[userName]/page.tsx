@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { Container, Box, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import { UserData } from '@/types/userData';
 import LoadingUserData from './loadingUserData';
 import UserInfoMainPage from './userInfoMainPage';

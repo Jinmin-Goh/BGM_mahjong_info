@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Typography, CircularProgress } from '@mui/material';
+import ReturnMainButton from './returnMainButton';
 
 export default function LoadingUserData() {
   return (
@@ -9,8 +10,11 @@ export default function LoadingUserData() {
       justifyContent="center"
       alignItems="center"
       minHeight="15vh"
-      gap={1}
+      position="relative"
     >
+      <Box position="absolute" left={40}>
+        <ReturnMainButton />
+      </Box>
       <Typography
         variant="h1"
         align="center"
