@@ -1,24 +1,22 @@
 'use client';
 
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-export default function LoadingUserData() {
+export default function UserNotFound() {
   return (
     <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
       minHeight="15vh"
-      gap={1}
     >
       <Typography
         variant="h1"
         align="center"
         sx={{ fontSize: '3rem', fontWeight: 'bold' }}
       >
-        유저 데이터를 불러오는 중입니다...
+        기록이 없는 유저명입니다.
       </Typography>
-      <CircularProgress size={40} thickness={6} />
     </Box>
   );
 }

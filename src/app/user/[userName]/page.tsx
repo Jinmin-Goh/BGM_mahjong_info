@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { Container, Box, Typography } from '@mui/material';
 import { UserData } from '@/types/userData';
 import LoadingUserData from './loadingUserData';
+import UserInfoMainPage from './userInfoMainPage';
+import UserNotFound from './userNotFound';
 
 export default function UserInfoPage() {
   const params = useParams();
@@ -37,34 +39,18 @@ export default function UserInfoPage() {
 
   return (
     <Container maxWidth="xl" style={{ marginTop: '40px' }}>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="15vh"
-      >
-        {userData ? (
-          userData?.has(userName) ? (
-            <Typography
-              variant="h1"
-              align="center"
-              sx={{ fontSize: '3rem', fontWeight: 'bold' }}
-            >
-              {userName}
-            </Typography>
-          ) : (
-            <Typography
-              variant="h1"
-              align="center"
-              sx={{ fontSize: '3rem', fontWeight: 'bold' }}
-            >
-              기록이 없는 유저명입니다.
-            </Typography>
-          )
+      {userData ? (
+        userData?.has(userName) ? (
+          <UserInfoMainPage
+            userName={userName}
+            userData={userData.get(userName)}
+          />
         ) : (
-          <LoadingUserData />
-        )}
-      </Box>
+          <UserNotFound />
+        )
+      ) : (
+        <LoadingUserData />
+      )}
     </Container>
   );
 }
