@@ -9,7 +9,7 @@ export default function UserInfoPage() {
   const params = useParams();
   const userName = params.userName as string;
   const [userData, setUserData] = useState<Map<string, UserData> | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
 
   const loadUserData = async () => {
     try {
@@ -19,14 +19,16 @@ export default function UserInfoPage() {
           revalidate: 0,
         },
       });
-      const result: Map<string, UserData> = new Map(Object.entries(await response.json()));
+      const result: Map<string, UserData> = new Map(
+        Object.entries(await response.json())
+      );
       setUserData(result);
     } catch (err) {
       console.error('Error:', err);
       setError('Failed to load user data');
     }
-  }
-  
+  };
+
   useEffect(() => {
     loadUserData();
     console.log(typeof userName);
