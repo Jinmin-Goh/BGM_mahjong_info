@@ -36,28 +36,26 @@ export default function UmaGraph({
   userName,
 }: UmaGraphProps) {
   var currUma = 0.0;
-  var umaData: {x: Date, y: number}[] = [];
+  var umaData: { x: Date; y: number }[] = [];
 
   filteredUserLogData?.forEach((data) => {
     if (data.firstPlaceName == userName) {
       currUma += 20 + (data.firstPlaceScore - 30000) / 1000;
-      umaData.push({x: data.timestamp, y: currUma});
+      umaData.push({ x: data.timestamp, y: currUma });
     }
     if (data.secondPlaceName == userName) {
       currUma += 10 + (data.secondPlaceScore - 30000) / 1000;
-      umaData.push({x: data.timestamp, y: currUma});
+      umaData.push({ x: data.timestamp, y: currUma });
     }
     if (data.thirdPlaceName == userName) {
       currUma += -10 + (data.thirdPlaceScore - 30000) / 1000;
-      umaData.push({x: data.timestamp, y: currUma});
+      umaData.push({ x: data.timestamp, y: currUma });
     }
     if (data.fourthPlaceName == userName) {
       currUma += -20 + (data.fourthPlaceScore - 30000) / 1000;
-      umaData.push({x: data.timestamp, y: currUma});
+      umaData.push({ x: data.timestamp, y: currUma });
     }
-  })
-
-  console.log(umaData)
+  });
 
   const graphData = {
     datasets: [
@@ -74,7 +72,7 @@ export default function UmaGraph({
       },
     ],
   };
-  
+
   const graphOptions = {
     responsive: true,
     plugins: {
