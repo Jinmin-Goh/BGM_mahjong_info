@@ -99,30 +99,46 @@ export default function RecentPlaceGraph({
             const dateList = filteredUserLogData?.slice(-30).map((item) => {
               return item.timestamp;
             });
-            const firstPlaceNameList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.firstPlaceName;
-            });
-            const firstPlaceScoreList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.firstPlaceScore;
-            });
-            const secondPlaceNameList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.secondPlaceName;
-            });
-            const secondPlaceScoreList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.secondPlaceScore;
-            });
-            const thirdPlaceNameList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.thirdPlaceName;
-            });
-            const thirdPlaceScoreList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.thirdPlaceScore;
-            });
-            const fourthPlaceNameList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.fourthPlaceName;
-            });
-            const fourthPlaceScoreList = filteredUserLogData?.slice(-30).map((item) => {
-              return item.fourthPlaceScore;
-            });
+            const firstPlaceNameList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.firstPlaceName;
+              });
+            const firstPlaceScoreList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.firstPlaceScore;
+              });
+            const secondPlaceNameList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.secondPlaceName;
+              });
+            const secondPlaceScoreList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.secondPlaceScore;
+              });
+            const thirdPlaceNameList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.thirdPlaceName;
+              });
+            const thirdPlaceScoreList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.thirdPlaceScore;
+              });
+            const fourthPlaceNameList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.fourthPlaceName;
+              });
+            const fourthPlaceScoreList = filteredUserLogData
+              ?.slice(-30)
+              .map((item) => {
+                return item.fourthPlaceScore;
+              });
             const date = dateList?.[dataIndex];
             const firstPlaceName = firstPlaceNameList?.[dataIndex];
             const firstPlaceScore = firstPlaceScoreList?.[dataIndex];
