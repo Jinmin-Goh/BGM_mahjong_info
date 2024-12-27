@@ -103,7 +103,5 @@ export function metadataProcess(totalData: DataGroup[]) {
   metadata['totalMostPlayedDate'] = mostPlayedDate;
   metadata['totalMostPlayedDateCount'] = mostPlayedDateCount;
 
-  console.log(metadata);
-
   return metadata;
 }

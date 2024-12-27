@@ -2,18 +2,22 @@
 
 import { Box, Typography } from '@mui/material';
 import { UserData } from '@/types/userData';
+import { DataGroup } from '@/types/data';
 import PieChart from './pieChart';
 import ReturnMainButton from './returnMainButton';
 import UserSummary from './userSummary';
+import RecentPlaceGraph from './recentPlaceGraph';
 
 interface UserInfoMainPageProps {
   userName: string | null;
   userData: UserData | undefined;
+  filteredUserLogData: DataGroup[] | null;
 }
 
 export default function UserInfoMainPage({
   userName,
   userData,
+  filteredUserLogData,
 }: UserInfoMainPageProps) {
   return (
     <Box>
@@ -50,6 +54,25 @@ export default function UserInfoMainPage({
         >
           <PieChart userData={userData} />
           <UserSummary userData={userData} />
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="15vh"
+      >
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="15vh"
+          style={{ marginTop: '30px' }}
+        >
+          <RecentPlaceGraph
+            filteredUserLogData={filteredUserLogData}
+            userName={userName}
+          />
         </Box>
       </Box>
     </Box>

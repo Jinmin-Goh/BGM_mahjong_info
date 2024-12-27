@@ -37,8 +37,8 @@ export default function PieChart({ userData }: PieChartProps) {
             const percentage = userRate[dataIndex];
 
             return [
-              ` ${dataIndex + 1}위 비율: ${(percentage! * 100).toFixed(2)}%`,
-              ` ${dataIndex + 1}위 횟수: ${count}회`,
+              ` 비율: ${(percentage! * 100).toFixed(2)}%`,
+              ` 횟수: ${count}회`,
             ];
           },
         },

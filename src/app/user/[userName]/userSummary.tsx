@@ -87,7 +87,7 @@ export default function UserSummary({ userData }: UserSummaryProps) {
                   (userData.firstPlaceRate + userData.secondPlaceRate) *
                   100
                 ).toFixed(2)
-              : 'Wrong data'}
+              : (0.0).toFixed(2)}
             %
           </Typography>
         </Grid>
@@ -100,7 +100,7 @@ export default function UserSummary({ userData }: UserSummaryProps) {
           <Typography variant="body1" fontSize={20}>
             {userData?.tobiRate
               ? (userData.tobiRate * 100).toFixed(2)
-              : 'Wrong data'}
+              : (0.0).toFixed(2)}
             % ({userData?.tobiCount}회)
           </Typography>
         </Grid>
