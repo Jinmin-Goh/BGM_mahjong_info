@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { DataGroup } from '@/types/data';
-import { parse } from 'date-fns';
 
 interface UmaGraphProps {
   filteredUserLogData: DataGroup[] | null;
@@ -35,8 +34,8 @@ export default function UmaGraph({
   filteredUserLogData,
   userName,
 }: UmaGraphProps) {
-  var currUma = 0.0;
-  var umaData: { x: Date; y: number }[] = [];
+  let currUma = 0.0;
+  const umaData: { x: Date; y: number }[] = [];
 
   filteredUserLogData?.forEach((data) => {
     if (data.firstPlaceName == userName) {
