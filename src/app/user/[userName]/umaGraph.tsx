@@ -85,6 +85,15 @@ export default function UmaGraph({
           size: 25,
         },
       },
+      tooltip: {
+        titleFont: {
+          size: 16,
+        },
+        bodyFont: {
+          size: 16,
+        },
+        padding: 8,
+      },
     },
     scales: {
       x: {
