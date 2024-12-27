@@ -42,8 +42,8 @@ export function userDataProcess(totalData: DataGroup[]) {
           tobiCount: 0,
           firstPlayDate: new Date(),
           recentPlayDate: new Date('2024-06-18T00:00:00.000Z'),
-          userHighestScore: 0,
-          userLowestScore: 0,
+          userHighestScore: -1000000,
+          userLowestScore: 1000000,
         } as UserData);
       userData.totalPlayCount += 1;
       userData.totalUma += (userScores[idx] - 30000) / 1000 + uma[idx];
