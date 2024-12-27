@@ -7,6 +7,7 @@ import PieChart from './pieChart';
 import ReturnMainButton from './returnMainButton';
 import UserSummary from './userSummary';
 import RecentPlaceGraph from './recentPlaceGraph';
+import UmaGraph from './umaGraph';
 
 interface UserInfoMainPageProps {
   userName: string | null;
@@ -70,6 +71,10 @@ export default function UserInfoMainPage({
           style={{ marginTop: '30px' }}
         >
           <RecentPlaceGraph
+            filteredUserLogData={filteredUserLogData}
+            userName={userName}
+          />
+          <UmaGraph
             filteredUserLogData={filteredUserLogData}
             userName={userName}
           />

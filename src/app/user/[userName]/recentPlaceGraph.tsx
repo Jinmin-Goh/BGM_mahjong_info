@@ -175,7 +175,7 @@ export default function RecentPlaceGraph({
         display: true,
         text: '최근 순위',
         font: {
-          size: 30,
+          size: 25,
         },
       },
     },
@@ -214,7 +214,7 @@ export default function RecentPlaceGraph({
       sx={{
         width: '550px',
         height: '300px',
-        margin: '0 auto',
+        margin: '20px',
         padding: 2,
         border: '1px solid #ddd',
         borderRadius: 2,
