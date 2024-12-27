@@ -195,7 +195,7 @@ export default function RecentPlaceGraph({
         reverse: true,
         ticks: {
           stepSize: 1,
-          callback: (value: number) => `${value}위`,
+          callback: (value: string | number) => `${value}위`,
           font: {
             size: 16,
           },
