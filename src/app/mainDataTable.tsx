@@ -21,6 +21,7 @@ import moment from 'moment-timezone';
 import { DataGroup } from '@/types/data';
 import RulesButton from './rulesButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { useRouter } from 'next/navigation';
 
 interface MainDataTableProps {
   data: DataGroup[];
@@ -32,6 +33,7 @@ export default function MainDataTable({ data }: MainDataTableProps) {
   const [order, setOrder] = React.useState<Order>('desc');
   const [orderBy, setOrderBy] = React.useState<keyof DataGroup>('timestamp');
   const [filter, setFilter] = React.useState<string>('');
+  const router = useRouter();
 
   const handleRequestSort = (property: keyof DataGroup) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -60,6 +62,10 @@ export default function MainDataTable({ data }: MainDataTableProps) {
       return 0;
     });
   }, [filteredData, order, orderBy]);
+
+  const handleClickName = (userName: string) => {
+    router.push(`/user/${userName}`);
+  };
 
   return (
     <Container maxWidth="xl" style={{ marginTop: '40px' }}>
@@ -208,13 +214,57 @@ export default function MainDataTable({ data }: MainDataTableProps) {
                       .tz(row.timestamp, 'Asia/Seoul')
                       .format('YYYY년 MM월 DD일 HH시 mm분')}
                   </TableCell>
-                  <TableCell align="right">{row.firstPlaceName}</TableCell>
+                  <TableCell
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: '#DDD',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                    align="right"
+                    onClick={() => handleClickName(row.firstPlaceName)}
+                  >
+                    {row.firstPlaceName}
+                  </TableCell>
                   <TableCell align="right">{row.firstPlaceScore}</TableCell>
-                  <TableCell align="right">{row.secondPlaceName}</TableCell>
+                  <TableCell
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: '#DDD',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                    align="right"
+                    onClick={() => handleClickName(row.secondPlaceName)}
+                  >
+                    {row.secondPlaceName}
+                  </TableCell>
                   <TableCell align="right">{row.secondPlaceScore}</TableCell>
-                  <TableCell align="right">{row.thirdPlaceName}</TableCell>
+                  <TableCell
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: '#DDD',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                    align="right"
+                    onClick={() => handleClickName(row.thirdPlaceName)}
+                  >
+                    {row.thirdPlaceName}
+                  </TableCell>
                   <TableCell align="right">{row.thirdPlaceScore}</TableCell>
-                  <TableCell align="right">{row.fourthPlaceName}</TableCell>
+                  <TableCell
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: '#DDD',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                    align="right"
+                    onClick={() => handleClickName(row.fourthPlaceName)}
+                  >
+                    {row.fourthPlaceName}
+                  </TableCell>
                   <TableCell align="right">{row.fourthPlaceScore}</TableCell>
                   <TableCell align="right">{row.checksum}</TableCell>
                   <TableCell align="right">{row.comment}</TableCell>
