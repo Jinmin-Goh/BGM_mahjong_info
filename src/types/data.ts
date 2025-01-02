@@ -10,4 +10,5 @@ export interface DataGroup {
   fourthPlaceScore: number;
   checksum: number;
   comment: string;
+  seasonLog: string;
 }

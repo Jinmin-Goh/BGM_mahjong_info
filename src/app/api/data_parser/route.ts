@@ -63,6 +63,7 @@ function dataProcess(data: string[]) {
     'fourthPlaceScore',
     'checksum',
     'comment',
+    'seasonLog',
   ];
 
   for (let i = 2 * keys.length; i < data.length; i += keys.length) {
