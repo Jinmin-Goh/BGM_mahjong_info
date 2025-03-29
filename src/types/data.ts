@@ -8,6 +8,7 @@ export interface DataGroup {
   thirdPlaceScore: number;
   fourthPlaceName: string;
   fourthPlaceScore: number;
+  unknown: string;
   checksum: number;
   comment: string;
   seasonLog: string;
