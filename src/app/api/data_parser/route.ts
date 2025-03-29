@@ -61,6 +61,7 @@ function dataProcess(data: string[]) {
     'thirdPlaceScore',
     'fourthPlaceName',
     'fourthPlaceScore',
+    'unknown',
     'checksum',
     'comment',
     'seasonLog',
